@@ -49,6 +49,7 @@ Ask, in plain English:
 7. **Supercharge it** → [docs/08 — Recommended add-ons (vetted skills & tools)](docs/08-recommended-add-ons.md)
 8. **Let it improve with use** → [docs/09 — How this repo learns from usage](docs/09-how-this-repo-learns.md)
 9. **Structural engineering?** → [docs/10 — Autodesk Robot Structural Analysis + the Autodesk Product Help MCP](docs/10-connect-robot-structural.md)
+10. **Code-compliant design (Eurocode + Finnish NA)?** → [docs/11 — eurocode-fi: cited, checkable calcs](docs/11-eurocode-fi.md)
 
 ---
 

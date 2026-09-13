@@ -1,0 +1,48 @@
+# na_timber.example.yaml — TEMPLATE (safe to commit; contains NO standard values)
+# ============================================================================
+# Copy this file to  params/na_timber.yaml  (gitignored) and fill each [FILL]
+# from YOUR licensed copies of the standards. This repo cannot ship these values
+# (they are copyrighted by CEN / SFS / the product-standard). Every field notes
+# WHICH clause/table the value comes from — look it up there.
+#
+# Leave nothing blank: the eurocode-fi tools STOP if a required value is missing,
+# rather than guessing. Units are given per field.
+
+material:
+  grade: GL30c                # glulam grade you are designing
+  f_m_k:      # N/mm^2   bending strength, char.        — EN 14080 (grade table)  [FILL]
+  f_v_k:      # N/mm^2   shear strength, char.          — EN 14080                [FILL]
+  f_t90_k:    # N/mm^2   tension perp. to grain, char.  — EN 14080                [FILL]
+  E0_mean:    # N/mm^2   mean modulus of elasticity     — EN 14080                [FILL]
+  E0_05:      # N/mm^2   5% modulus (stability/SLS)     — EN 14080                [FILL]
+  rho_k:      # kg/m^3   char. density                  — EN 14080                [FILL]
+
+partial_factors:
+  gamma_M:    # -        material partial factor        — EN 1995-1-1 §2.4.1 + SFS-NA  [FILL]
+
+service_class: 2             # your service class (1/2/3) — EN 1995-1-1 §2.3.1.3
+
+# k_mod per load-duration class, for the service class above.
+k_mod:                       # — EN 1995-1-1 Table 3.1  [FILL each you use]
+  permanent:
+  long_term:
+  medium_term:
+  short_term:
+  instantaneous:
+
+k_def:        # -          creep factor for the service class — EN 1995-1-1 Table 3.2  [FILL]
+
+k_cr:         # -          crack factor for shear (effective width) — EN 1995-1-1 §6.1.7 + SFS-NA  [FILL]
+
+# Load-combination factors (ULS/SLS) — EN 1990 + SFS-NA
+actions:
+  gamma_G:    # -   permanent, unfavourable   — EN 1990 §6.4.3 + SFS-NA  [FILL]
+  gamma_Q:    # -   variable, leading          — EN 1990 + SFS-NA        [FILL]
+  KFI:        # -   consequence-class factor   — EN 1990 + SFS-NA        [FILL]
+  psi0_snow:  # -   combination factor, snow    — EN 1990 Table A1.1 + SFS-NA  [FILL]
+  psi2_snow:  # -   quasi-permanent, snow       — EN 1990 + SFS-NA        [FILL]
+
+# Deflection limits (as span/ratio) — SFS-NA to EN 1995-1-1 §7.2
+deflection_limits:
+  w_inst_ratio:     # e.g. 300 means L/300   [FILL]
+  w_net_fin_ratio:  # e.g. 250 means L/250   [FILL]

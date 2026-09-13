@@ -4,6 +4,12 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Added
+- **eurocode-fi** (`docs/11`): code-grounded structural calcs to Eurocode +
+  Finnish NA. New `eurocode-fi` skill (cite clause, never invent a value, Level-2
+  independent re-check, Finnish output, copyright guardrail), a `params/`
+  contract (committed blank template + gitignored filled file), and a timber
+  worked example (`examples/eurocode/timber/glulam_beam_ec5.py`: ULS bending/shear
+  + SLS deflection, cross-checked, writes a Finnish calc note). Adds `pyyaml`.
 - **Autodesk support** (`docs/10`): registers the official **Autodesk Product
   Help MCP** (`https://developer.api.autodesk.com/knowledge/public/v1/mcp`,
   read-only, free) for trusted Autodesk docs; adds a **Robot Structural Analysis**

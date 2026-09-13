@@ -19,6 +19,8 @@ outputs/
 *.png
 *.pdf
 !docs/**/*.png
+# Generated calc notes (regenerated per run, often from local params)
+laskumuistio_*.md
 
 # OS / editor
 .DS_Store
@@ -37,3 +39,8 @@ Thumbs.db
 # Ignore runtime skill symlinks, but keep skills authored in this repo
 .claude/skills/*
 !.claude/skills/robot-structural/
+!.claude/skills/eurocode-fi/
+
+# Filled NA parameter files hold the user's licensed values — keep only templates
+params/*.yaml
+!params/*.example.yaml
