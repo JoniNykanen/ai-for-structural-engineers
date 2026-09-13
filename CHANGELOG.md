@@ -6,6 +6,10 @@ Notable changes to this repo. Keep entries short; newest on top.
 ### Added
 - **Automatic learning loop**: `Stop` hook (`.claude/hooks/capture_session.py`)
   captures every session's Q&A into `solved/` and indexes it in `USAGE_LOG.md`.
+- **Auto-push** (opt-in): `SessionEnd` hook (`.claude/hooks/push_session.py`)
+  commits + pushes `solved/` per session when `.claude/autopush.enabled` exists.
+- **One-command setup**: `setup.ps1` (Windows) and `setup.sh` (macOS/Linux) —
+  Python env, MATLAB Engine API, MCP server registration, skills, and plugins.
 - `docs/09-how-this-repo-learns.md` — the capture → review → codify routine.
 - `CLAUDE.md` learning-loop section (weekly review + promotion of lessons).
 

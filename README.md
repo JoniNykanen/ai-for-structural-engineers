@@ -32,6 +32,14 @@ Ask, in plain English:
 
 ## Quickstart (15 minutes)
 
+> **Fastest path:** install Claude Code ([docs/01](docs/01-install-claude-code.md))
+> and Python ([docs/02](docs/02-python-setup.md)), then from the repo root run
+> **`./setup.ps1`** (Windows) or **`bash setup.sh`** (macOS/Linux). It does the
+> Python env, MATLAB Engine API, MATLAB MCP Server registration, skills, and
+> plugins automatically. Add `-EnableAutoPush` / `--autopush` to also push
+> captured sessions (see [docs/09](docs/09-how-this-repo-learns.md)). Then restart
+> Claude Code. The manual steps below explain what the script does.
+
 1. **New to all of this?** Read [docs/00 — What is this?](docs/00-what-is-this.md) first (5 min).
 2. **Install Claude Code** → [docs/01](docs/01-install-claude-code.md)
 3. **Set up Python** (the calculation engine) → [docs/02](docs/02-python-setup.md)

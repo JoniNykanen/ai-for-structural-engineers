@@ -31,6 +31,27 @@ it just accumulates.
 > **Activation:** hooks load at session start. After cloning or first setup,
 > restart Claude Code (or open `/hooks` once) so the hook registers.
 
+### Optional: auto-push the data to the repo
+
+By default, captured sessions stay **local** — the data reaches the private repo
+only when you `git push`. To automate that, a **`SessionEnd` hook**
+(`.claude/hooks/push_session.py`) commits `solved/` + `USAGE_LOG.md` and pushes
+them once per session.
+
+It's **opt-in per machine** for safety (so a cloner never pushes by accident): it
+only runs if the file `.claude/autopush.enabled` exists (gitignored). Enable it:
+
+```bash
+# via the setup script
+./setup.ps1 -EnableAutoPush        # Windows
+bash setup.sh --autopush           # macOS/Linux
+# …or by hand
+echo enabled > .claude/autopush.enabled
+```
+
+Disable by deleting that file. The push is scoped to `solved/` + `USAGE_LOG.md`
+only — it never touches your other working changes.
+
 ## 2. Review — weekly, ~10 minutes
 
 Once a week, start Claude in the repo and ask:

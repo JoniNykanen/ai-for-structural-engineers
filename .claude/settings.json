@@ -12,6 +12,18 @@
           }
         ]
       }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/push_session.py\" 2>/dev/null || true",
+            "statusMessage": "Pushing session data…",
+            "timeout": 90
+          }
+        ]
+      }
     ]
   }
 }

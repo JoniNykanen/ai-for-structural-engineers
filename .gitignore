@@ -29,5 +29,8 @@ Thumbs.db
 # Claude Code local state (keep CLAUDE.md, ignore local settings)
 .claude/settings.local.json
 
+# Per-machine auto-push opt-in marker (each user enables locally)
+.claude/autopush.enabled
+
 # Third-party agent skills installed locally (install per docs/08, don't vendor)
 .agents/
