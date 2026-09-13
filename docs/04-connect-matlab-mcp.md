@@ -1,95 +1,139 @@
-# 04 — Method 3: MATLAB MCP server (advanced)
+# 04 — Method 3: MATLAB MCP server (official MathWorks)
 
-*Goal: let Claude Code call MATLAB **directly as a native tool**, without you
-writing any Python glue. This is the most "AI-native" option but has the most
-moving parts. **Requires a MATLAB license.***
+*Goal: let Claude Code call MATLAB **directly as native tools**, without writing
+any Python glue. This uses the **official MATLAB MCP Server from MathWorks** —
+reputable, maintained, and the recommended MCP path. **Requires a MATLAB
+license.***
+
+> ✅ **Verified working** in this repo with MATLAB **R2026a** on Windows,
+> server **v0.13.0**, registered to Claude Code and reporting `Connected`.
 
 ## What is MCP?
 
 **MCP (Model Context Protocol)** is a standard way to give AI tools new
-abilities by running a small "server" the AI can call. An **MATLAB MCP server**
-exposes MATLAB commands as tools Claude can invoke on its own — so Claude can run
-MATLAB code the same way it runs its built-in tools, and read the results
-(including figures) back automatically.
+abilities via a small "server" the AI can call. The MATLAB MCP Server exposes
+MATLAB as tools Claude can invoke on its own:
+
+| Tool | What it does |
+|---|---|
+| `evaluate_matlab_code` | Run a string of MATLAB code, return the output |
+| `run_matlab_file` | Run a `.m` script file |
+| `run_matlab_test_file` | Run a MATLAB unit-test file, return results |
+| `check_matlab_code` | Static analysis (style, errors, deprecations) — read-only |
+| `detect_matlab_toolboxes` | List installed MATLAB + toolboxes and versions |
 
 ```
-Claude Code ──(MCP tool call)──► MATLAB MCP server ──► MATLAB Engine ──► results/figures ──► Claude
+Claude Code ──(MCP tool call)──► MATLAB MCP Server (Go binary) ──► your local MATLAB ──► results ──► Claude
 ```
 
-Compared to Method 2 (Engine API): same underlying engine, but Claude calls
-MATLAB *itself* instead of you/Claude writing a Python script each time.
+Vs Method 2 (Engine API): same idea, but Claude calls MATLAB *itself* instead of
+you/Claude writing a Python script each time.
 
 ## Prerequisites
 
-- MATLAB installed + the **MATLAB Engine API for Python** working first — do
-  [docs/03](03-connect-matlab-engine-api.md) and confirm the demo runs. The MCP
-  server sits on top of it.
-- **Python 3.10+** and `pip`.
-- Claude Code installed ([docs/01](01-install-claude-code.md)).
+- **MATLAB R2021a or later**, installed locally (a license).
+- **Claude Code** installed ([docs/01](01-install-claude-code.md)).
+- Note your MATLAB root: in MATLAB run `matlabroot` (e.g.
+  `C:\Program Files\MATLAB\R2026a`). You'll pass this to the server, so MATLAB
+  does **not** need to be on your system PATH.
 
-## Step 1 — Pick and install a MATLAB MCP server
+## Step 1 — Download the official server binary
 
-There are community MATLAB MCP servers on GitHub (search
-"**matlab mcp server**"). They vary, so **read the specific project's README**
-for exact install steps. A typical pattern:
+Grab the binary for your OS from the
+[latest release](https://github.com/matlab/matlab-mcp-server/releases/latest):
 
+- **Windows:** `matlab-mcp-server-windows-x64.exe`
+- **Linux:** `matlab-mcp-server-linux-x64`
+- **macOS:** `matlab-mcp-server-macos-arm64` (Apple silicon) or `-x64` (Intel)
+
+Save it somewhere stable, e.g. `C:\Users\<you>\matlab-mcp-server\`.
+
+Using the GitHub CLI (Windows example):
 ```bash
-# Example only — follow YOUR chosen server's README for the real command/name.
-pip install matlab-mcp-server
+mkdir -p "$HOME/matlab-mcp-server"
+gh release download --repo matlab/matlab-mcp-server \
+  --pattern "*windows-x64*" --dir "$HOME/matlab-mcp-server"
 ```
 
-Note the command that *starts* the server (each project documents this), e.g.:
+Verify it runs:
 ```bash
-matlab-mcp-server            # or:  python -m matlab_mcp_server
+"$HOME/matlab-mcp-server/matlab-mcp-server-windows-x64.exe" --version
+# -> github.com/matlab/matlab-mcp-server v0.13.0
 ```
 
-> ⚠️ MCP servers run with real permissions on your machine. Only install ones
-> whose source you can read on GitHub and reasonably trust. Prefer projects with
-> visible activity and stars.
+## Step 2 — Register it with Claude Code
 
-## Step 2 — Register the server with Claude Code
+One command. Point `--matlab-root` at *your* MATLAB (no `\bin` on the end):
 
-Claude Code manages MCP servers with the `claude mcp` command. General shape
-(replace the command/args with your server's real ones from Step 1):
-
-```bash
-claude mcp add matlab -- <command-that-starts-the-server> [args...]
+**Windows (PowerShell):**
+```powershell
+claude mcp add --transport stdio matlab -- `
+  "C:\Users\<you>\matlab-mcp-server\matlab-mcp-server-windows-x64.exe" `
+  "--matlab-root=C:\Program Files\MATLAB\R2026a"
 ```
 
-For example, if the server starts with `python -m matlab_mcp_server`:
+**macOS / Linux:**
 ```bash
-claude mcp add matlab -- python -m matlab_mcp_server
+claude mcp add --transport stdio matlab -- \
+  "$HOME/matlab-mcp-server/matlab-mcp-server-<os>" \
+  --matlab-root=/usr/local/MATLAB/R2026a
 ```
 
-Check it registered:
+Confirm it registered and is healthy:
 ```bash
-claude mcp list
+claude mcp list          # matlab: ... - Connected
+claude mcp get matlab    # shows scope, command, args
 ```
+
+> **Scope:** by default this is *local* (private to you, this project). Add
+> `-s user` before `--` to make it available in all your projects.
 
 ## Step 3 — Use it
 
-Start Claude and confirm the tools are visible:
+**Restart Claude Code** (MCP tools load at session start), then ask:
 ```
-List your available MCP tools. Do you have MATLAB tools?
+List your MATLAB MCP tools, then use evaluate_matlab_code to compute the
+principal stresses and von Mises stress for sigma_x=180, sigma_y=60, tau_xy=40 MPa.
+Show the MATLAB code and the result.
 ```
-Then just ask for MATLAB work naturally:
-```
-Using the MATLAB MCP tools, solve the plastic collapse load of a fixed-fixed beam
-under a central point load with plastic moment Mp = 40 kN·m and span L = 6 m.
-Plot the bending moment diagram at collapse.
-```
-Claude will call MATLAB directly, run the analysis, and pull the figure back.
+Claude calls MATLAB directly, runs it, and reports back. First call boots MATLAB
+(a few seconds).
+
+## Useful server arguments
+
+| Argument | Why you'd use it |
+|---|---|
+| `--matlab-root=<path>` | Pick which MATLAB to use (needed if not on PATH) |
+| `--initial-working-folder=<path>` | Start MATLAB in your project folder |
+| `--matlab-display-mode=nodesktop` | Don't pop the MATLAB desktop window |
+| `--matlab-session-mode=existing` | Attach to an already-open MATLAB (run `shareMATLABSession()` in it first) |
+| `--disable-telemetry=true` | Opt out of anonymized usage data |
+
+## Even higher-level: the MATLAB Agentic Toolkit
+
+MathWorks also ships the
+[**MATLAB Agentic Toolkit**](https://github.com/matlab/matlab-agentic-toolkit),
+which bundles a native Claude Code plugin *and can install this MCP server for
+you*, plus task-specific skills for MATLAB/Simulink work. If you'd rather not do
+Steps 1–2 by hand, that toolkit is the one-stop option.
 
 ## Troubleshooting
 
-- **`claude mcp list` doesn't show MATLAB** → the `add` command's start-command
-  is wrong. Test that command by itself in a terminal first; it should launch
-  and wait.
-- **Tools appear but every call errors** → the underlying Engine API isn't
-  working. Re-verify [docs/03](03-connect-matlab-engine-api.md) Step 2.
-- **Too fiddly?** Method 2 (Engine API) gives 90% of the value with less setup,
-  and the free Python path ([docs/05](05-python-sympy-fallback.md)) needs no
-  MATLAB at all.
+- **`claude mcp list` shows `Failed to connect`** → the binary path or
+  `--matlab-root` is wrong. Test the binary's `--version` alone; check the root
+  path exists and has no `\bin`.
+- **Tools don't appear in a session** → restart Claude Code; MCP tools load at
+  startup. Ask: *"List your MCP tools."*
+- **Every call errors** → confirm MATLAB itself launches (open it once
+  normally). Try `--matlab-display-mode=nodesktop`.
+- **Remove it:** `claude mcp remove matlab -s local`.
+
+## Which method should I actually use?
+
+- **Just calculating?** Method 1 (Python, free) or Method 2 (Engine API) are
+  simpler.
+- **Want Claude to run MATLAB autonomously, check code style, run tests?** This
+  MCP server is the most capable — that's what it's built for.
 
 ## Next step
 
