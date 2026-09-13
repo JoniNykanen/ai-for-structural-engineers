@@ -3,8 +3,11 @@
 *Goal: get the `claude` command working in your terminal. ~10 minutes.*
 
 Claude Code is available as a terminal CLI, a desktop app (Windows/Mac), a web
-app at claude.ai/code, and IDE extensions (VS Code, JetBrains). This guide covers
-the **terminal CLI**, which is what this repo assumes.
+app at claude.ai/code, and IDE extensions (VS Code, JetBrains). Steps 1–5 set up
+the **terminal CLI**; if you prefer **VS Code** (a very common way to run Claude
+Code), jump to [Using Claude Code in VS Code](#using-claude-code-in-vs-code) —
+everything in this repo (tutor rules, MATLAB MCP tools, the learning-loop hooks)
+works identically there.
 
 ## Step 1 — Open a terminal
 
@@ -61,6 +64,47 @@ claude
 Starting `claude` from *inside* this folder means it automatically reads the
 [`CLAUDE.md`](../CLAUDE.md) tutor instructions — Claude will show its working and
 run every calculation.
+
+## Using Claude Code in VS Code
+
+VS Code is one of the most common ways to run Claude Code. Two options — pick
+either:
+
+### Option A — the Claude Code extension (GUI panel)
+
+1. Open VS Code → **Extensions** (`Ctrl+Shift+X`) → search **"Claude Code"**
+   (publisher **Anthropic**) → **Install**.
+2. **File → Open Folder…** and open the cloned `matlab-claude-for-engineers`
+   folder. Opening it as the workspace is what makes Claude load this repo's
+   [`CLAUDE.md`](../CLAUDE.md), MCP servers, skills, and hooks.
+3. Open the Claude Code panel (click the Claude icon in the sidebar, or
+   `Ctrl+Shift+P` → **"Claude Code: Focus"**). Sign in when prompted (same
+   Claude Pro/Max or API account as the CLI).
+4. Ask a question in the panel — Claude shows diffs and results inside the editor.
+
+### Option B — the integrated terminal
+
+If you installed the CLI (Steps 1–3), just open VS Code's terminal
+(`Ctrl+` `` ` ``), `cd` into the repo, and run `claude`. It detects VS Code and
+shows diffs in the editor. Nothing extra to install.
+
+### Activating changes in VS Code (important)
+
+Hooks, MCP servers, and skills load when a Claude session **starts**. After
+running `setup.ps1`/`setup.sh` or installing anything, refresh so VS Code picks
+it up:
+
+- `Ctrl+Shift+P` → **"Developer: Reload Window"**, then start a new Claude session, **or**
+- restart VS Code.
+
+You do **not** need to reinstall anything — just reload. Verify with:
+```
+List your MATLAB MCP tools and run detect_matlab_toolboxes.
+```
+
+> **Which should I use?** The extension is friendlier for beginners (buttons,
+> inline diffs); the terminal CLI is identical in capability. Both read the same
+> config, so the MATLAB connection and the learning loop behave the same way.
 
 ## Handy things to know
 
