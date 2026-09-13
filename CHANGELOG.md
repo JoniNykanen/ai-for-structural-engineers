@@ -4,6 +4,10 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Added
+- **Finnish reference tools** (`docs/12`): curated links to Puuinfo's free
+  EC5/RIL 205 timber tools (glulam beam, mahapalkki, column…) for independent
+  cross-checking, plus DOF with a legacy (RakMK B7) caveat. Link-only, no
+  copyrighted content copied; wired into the eurocode-fi Level-2 verification.
 - **eurocode-fi** (`docs/11`): code-grounded structural calcs to Eurocode +
   Finnish NA. New `eurocode-fi` skill (cite clause, never invent a value, Level-2
   independent re-check, Finnish output, copyright guardrail), a `params/`

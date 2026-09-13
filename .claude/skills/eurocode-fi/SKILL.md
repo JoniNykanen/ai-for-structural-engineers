@@ -49,6 +49,10 @@ closed-form, or MATLAB vs Python, or hand-substitution), and compare within a
 small tolerance. Report `Ristiintarkistus: OK` or the delta. Treat this as a
 skeptical checker trying to find an error, not a rubber stamp.
 
+For **timber**, an independent check can also mean running the same case through
+a free Finnish reference tool (e.g. Puuinfo's glulam beam / mahapalkki tools) and
+comparing utilisations — as a black box, never copying its content. See docs/12.
+
 ## Rule 4 — units & sanity
 
 Work in consistent SI (kN, m, mm, N/mm²=MPa). Check dimensional consistency and

@@ -50,6 +50,7 @@ Ask, in plain English:
 8. **Let it improve with use** → [docs/09 — How this repo learns from usage](docs/09-how-this-repo-learns.md)
 9. **Structural engineering?** → [docs/10 — Autodesk Robot Structural Analysis + the Autodesk Product Help MCP](docs/10-connect-robot-structural.md)
 10. **Code-compliant design (Eurocode + Finnish NA)?** → [docs/11 — eurocode-fi: cited, checkable calcs](docs/11-eurocode-fi.md)
+11. **Cross-check against free Finnish tools** → [docs/12 — Puuinfo & co. reference/validation tools](docs/12-suomalaiset-referenssityokalut.md)
 
 ---
 
