@@ -7,6 +7,6 @@ matplotlib>=3.8
 
 # --- Optional: only if you have a MATLAB license and want Method 2 ---
 # The MATLAB Engine API for Python. The version MUST match your installed
-# MATLAB release (e.g. MATLAB R2024b -> matlabengine==24.2.x).
+# MATLAB release (e.g. MATLAB R2026a -> matlabengine==26.1.x).
 # See docs/03-connect-matlab-engine-api.md for the exact command.
 # matlabengine

@@ -34,10 +34,16 @@ python -m pip install matlabengine
 
 | MATLAB release | Install command |
 |---|---|
+| R2026a | `pip install matlabengine==26.1.*` |
+| R2025b | `pip install matlabengine==25.2.*` |
+| R2025a | `pip install matlabengine==25.1.*` |
 | R2024b | `pip install matlabengine==24.2.*` |
 | R2024a | `pip install matlabengine==24.1.*` |
 | R2023b | `pip install matlabengine==23.2.*` |
 | R2023a | `pip install matlabengine==23.1.*` |
+
+> **Pattern:** the version is `YY.N` where `a` releases → `.1` and `b` releases →
+> `.2`. So R2026a → `26.1.*`, R2026b → `26.2.*`, and so on.
 
 If `pip install matlabengine` picks the wrong version, use the pinned command above.
 
