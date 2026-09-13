@@ -31,6 +31,8 @@ irm https://claude.ai/install.ps1 | iex
 
 > Alternative if you already have Node.js 18+:
 > `npm install -g @anthropic-ai/claude-code`
+>
+> Official install docs: <https://docs.anthropic.com/en/docs/claude-code/setup>
 
 Close and reopen your terminal after installing so it picks up the new command.
 
@@ -73,7 +75,8 @@ either:
 ### Option A — the Claude Code extension (GUI panel)
 
 1. Open VS Code → **Extensions** (`Ctrl+Shift+X`) → search **"Claude Code"**
-   (publisher **Anthropic**) → **Install**.
+   (publisher **Anthropic**) → **Install**. Direct link:
+   [Claude Code for VS Code (Marketplace)](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code).
 2. **File → Open Folder…** and open the cloned `matlab-claude-for-engineers`
    folder. Opening it as the workspace is what makes Claude load this repo's
    [`CLAUDE.md`](../CLAUDE.md), MCP servers, skills, and hooks.
@@ -112,6 +115,14 @@ List your MATLAB MCP tools and run detect_matlab_toolboxes.
 - `/clear` — start a fresh conversation (do this between unrelated problems to
   keep Claude focused and fast).
 - Type `!` before a line to run a raw shell command (e.g. `! python --version`).
+
+## Official links
+
+- Claude Code docs (home): <https://docs.anthropic.com/en/docs/claude-code>
+- Install / setup: <https://docs.anthropic.com/en/docs/claude-code/setup>
+- Use Claude Code in VS Code (IDE integrations): <https://docs.anthropic.com/en/docs/claude-code/ide-integrations>
+- Claude Code for VS Code (Marketplace extension): <https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code>
+- Web app: <https://claude.ai/code>
 
 ## Next step
 
