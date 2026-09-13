@@ -4,6 +4,12 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Added
+- **Autodesk support** (`docs/10`): registers the official **Autodesk Product
+  Help MCP** (`https://developer.api.autodesk.com/knowledge/public/v1/mcp`,
+  read-only, free) for trusted Autodesk docs; adds a **Robot Structural Analysis**
+  Python/COM starter (`examples/robot/`) and a **`robot-structural` skill** that
+  encodes RobotOM idioms. (No official MCP *drives* Robot; Product Help MCP + the
+  skill counter API hallucination.)
 - **Automatic learning loop**: `Stop` hook (`.claude/hooks/capture_session.py`)
   captures every session's Q&A into `solved/` and indexes it in `USAGE_LOG.md`.
 - **Auto-push** (opt-in): `SessionEnd` hook (`.claude/hooks/push_session.py`)

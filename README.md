@@ -48,6 +48,7 @@ Ask, in plain English:
 6. **Learn to prompt well** → [docs/07 — How to ask Claude for engineering calcs](docs/07-how-to-prompt-claude.md)
 7. **Supercharge it** → [docs/08 — Recommended add-ons (vetted skills & tools)](docs/08-recommended-add-ons.md)
 8. **Let it improve with use** → [docs/09 — How this repo learns from usage](docs/09-how-this-repo-learns.md)
+9. **Structural engineering?** → [docs/10 — Autodesk Robot Structural Analysis + the Autodesk Product Help MCP](docs/10-connect-robot-structural.md)
 
 ---
 
