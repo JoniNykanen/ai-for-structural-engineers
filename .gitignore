@@ -34,3 +34,4 @@ Thumbs.db
 
 # Third-party agent skills installed locally (install per docs/08, don't vendor)
 .agents/
+.claude/skills/
