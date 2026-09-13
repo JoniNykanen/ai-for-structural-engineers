@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/capture_session.py\" 2>/dev/null || true",
+            "statusMessage": "Saving session to solved/…",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

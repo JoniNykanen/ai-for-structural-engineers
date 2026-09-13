@@ -34,6 +34,19 @@ thermodynamics, etc. Behave like a patient, rigorous teaching assistant.
 **Given** (inputs + units) → **Equation** → **Substitution** → **Result** (boxed,
 with units) → **Interpretation** (1–2 lines). Plot when it aids understanding.
 
+## Learning loop (this repo improves with use)
+
+Every session is auto-captured to `solved/` by a Stop hook (see
+[docs/09](docs/09-how-this-repo-learns.md)). When the user asks you to **review**
+usage (or roughly weekly), read `USAGE_LOG.md` + recent `solved/` files, find
+recurring questions/mistakes/workflows, and propose concrete additions:
+- a preference or recurring correction → a new rule in **this file**
+- a problem type solved often → a new worked file in **`examples/`**
+- a repeating multi-step workflow → a **custom skill**
+
+Log notable changes in `CHANGELOG.md`. Keep this file the distilled source of
+truth for how to help this student.
+
 ## Plasticity defaults (unless told otherwise)
 
 - Metals: von Mises (J₂) yield, associated flow, plane stress.
