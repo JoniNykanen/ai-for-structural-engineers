@@ -38,6 +38,7 @@ Ask, in plain English:
 4. **Run your first calculation** with the no-license Python path → [docs/05](docs/05-python-sympy-fallback.md)
 5. **Add MATLAB** when you're ready → [docs/03](docs/03-connect-matlab-engine-api.md) or [docs/04](docs/04-connect-matlab-mcp.md)
 6. **Learn to prompt well** → [docs/07 — How to ask Claude for engineering calcs](docs/07-how-to-prompt-claude.md)
+7. **Supercharge it** → [docs/08 — Recommended add-ons (vetted skills & tools)](docs/08-recommended-add-ons.md)
 
 ---
 
