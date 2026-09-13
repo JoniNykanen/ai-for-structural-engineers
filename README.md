@@ -51,6 +51,7 @@ Ask, in plain English:
 9. **Structural engineering?** → [docs/10 — Autodesk Robot Structural Analysis + the Autodesk Product Help MCP](docs/10-connect-robot-structural.md)
 10. **Code-compliant design (Eurocode + Finnish NA)?** → [docs/11 — eurocode-fi: cited, checkable calcs](docs/11-eurocode-fi.md)
 11. **Cross-check against free Finnish tools** → [docs/12 — Puuinfo & co. reference/validation tools](docs/12-suomalaiset-referenssityokalut.md)
+12. **(Optional) Read your own LinkedIn posts into Claude** → [docs/13 — LinkedIn MCP](docs/13-linkedin-mcp.md)
 
 ---
 

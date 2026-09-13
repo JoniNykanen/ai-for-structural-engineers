@@ -4,6 +4,10 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Added
+- **LinkedIn MCP** (`docs/13`, optional): guide to connect Claude to your own
+  LinkedIn posts via an open-source OAuth (official-API) MCP server — read-only,
+  for voice/style matching. Notes the Community Management API approval gate.
+  Machine-local (not committed); registration uses `-e` env creds.
 - **Finnish reference tools** (`docs/12`): curated links to Puuinfo's free
   EC5/RIL 205 timber tools (glulam beam, mahapalkki, column…) for independent
   cross-checking, plus DOF with a legacy (RakMK B7) caveat. Link-only, no
