@@ -29,7 +29,10 @@ RobotOM API for creating bars and load cases."*
 
 ---
 
-## B. Driving Robot itself — Python + COM (no ready-made MCP)
+> **New:** to drive Robot through MCP tools (like MATLAB), see
+> [docs/14 — Robot MCP](14-robot-mcp.md). Part B below is the raw-COM route.
+
+## B. Driving Robot itself — Python + COM
 
 **Reality check:** Autodesk's automation MCPs cover **Revit** and **Fusion** —
 **there is no official MCP that drives Robot Structural Analysis.** APS (Autodesk

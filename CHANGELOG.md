@@ -4,6 +4,11 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Added
+- **Robot MCP** (`docs/14`): project `.mcp.json` registers server `robot` —
+  third-party MIT [`rsap-mcp`](https://github.com/nhantruong96/rsap-mcp), 35 tools
+  (model → loads → calculate → results), pinned to reviewed commit `08ab805`.
+  `setup.ps1` installs it to gitignored `tools/rsap-mcp/` when Robot is detected
+  (or `-WithRobot`). Untested end-to-end here (no Robot on authoring machine).
 - **LinkedIn MCP** (`docs/13`, optional): guide to connect Claude to your own
   LinkedIn posts via an open-source OAuth (official-API) MCP server — read-only,
   for voice/style matching. Notes the Community Management API approval gate.

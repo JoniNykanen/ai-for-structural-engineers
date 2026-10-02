@@ -17,6 +17,13 @@ You are generating code to control **Robot Structural Analysis Professional**.
 Its automation surface is the **RobotOM COM API**. This is niche and
 version-sensitive — follow these rules to avoid inventing API members.
 
+## Prefer the `robot` MCP when it is connected
+
+If the `robot` MCP server is available (docs/14), use its `rsap_*` tools instead
+of generating COM code. They work in **SI base units (m, N, N·m)** — convert and
+label units explicitly when reporting. Fall back to the COM code below only for
+things those tools don't cover.
+
 ## Rule 0 — verify, don't guess
 
 Robot's API has hundreds of interfaces. Before asserting an object/method/enum
@@ -70,7 +77,7 @@ report with **units** and a sanity check (per this repo's CLAUDE.md).
 
 ## When unsure
 
-There is **no official Autodesk MCP that *drives* Robot** (Revit/Fusion have
-automation MCPs; Robot does not). So you are generating raw COM code — accuracy
+There is **no official Autodesk MCP that *drives* Robot** — the `robot` MCP is
+third-party (docs/14). Outside its tools you are generating raw COM code — accuracy
 matters. Lean on `autodesk-product-help` for the docs, keep examples small, and
 have the user run them in Robot to verify (this repo can't test Robot).

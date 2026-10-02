@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "robot": {
+      "type": "stdio",
+      "command": "tools/rsap-mcp/.venv/Scripts/python.exe",
+      "args": ["-m", "rsap_mcp"],
+      "env": {
+        "RSAP_VISIBLE": "true",
+        "RSAP_INTERACTIVE": "true"
+      }
+    }
+  }
+}

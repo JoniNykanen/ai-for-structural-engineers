@@ -6,9 +6,11 @@
 # Idempotent: safe to re-run. Sets up the Python calc environment, and (if a
 # MATLAB license is present) the official MATLAB MCP Server, skills, and plugins.
 # Pass -EnableAutoPush to also auto-commit/push captured sessions.
+# Robot Structural Analysis MCP is installed when Robot is detected (or -WithRobot).
 
 param(
-    [switch]$EnableAutoPush
+    [switch]$EnableAutoPush,
+    [switch]$WithRobot      # install the Robot MCP even if Robot isn't detected
 )
 
 $ErrorActionPreference = "Stop"
@@ -17,7 +19,7 @@ Write-Host "== MATLAB + Claude for Engineers - setup ==" -ForegroundColor Cyan
 Write-Host "Repo: $repo`n"
 
 # --- 1. Python virtual environment + calculation libraries ------------------
-Write-Host "[1/6] Python environment..." -ForegroundColor Yellow
+Write-Host "[1/7] Python environment..." -ForegroundColor Yellow
 $py = "python"
 & $py --version | Out-Null
 if (-not (Test-Path "$repo\.venv")) { & $py -m venv "$repo\.venv" }
@@ -27,7 +29,7 @@ $venvPy = "$repo\.venv\Scripts\python.exe"
 Write-Host "  numpy/scipy/sympy/matplotlib installed." -ForegroundColor Green
 
 # --- 2. Detect MATLAB -------------------------------------------------------
-Write-Host "[2/6] Detecting MATLAB..." -ForegroundColor Yellow
+Write-Host "[2/7] Detecting MATLAB..." -ForegroundColor Yellow
 $matlabBase = "C:\Program Files\MATLAB"
 $matlabRoot = $null
 if (Test-Path $matlabBase) {
@@ -43,7 +45,7 @@ if ($matlabRoot) {
 
 # --- 3. MATLAB Engine API (matched to the release) --------------------------
 if ($matlabRoot) {
-    Write-Host "[3/6] MATLAB Engine API..." -ForegroundColor Yellow
+    Write-Host "[3/7] MATLAB Engine API..." -ForegroundColor Yellow
     # Release-year versioning: R2026a -> 26.1, R2026b -> 26.2
     if ($release -match "R(\d{4})([ab])") {
         $yy = [int]$Matches[1] - 2000
@@ -61,7 +63,7 @@ if ($matlabRoot) {
 
 # --- 4. Official MATLAB MCP Server + registration ---------------------------
 if ($matlabRoot) {
-    Write-Host "[4/6] MATLAB MCP Server..." -ForegroundColor Yellow
+    Write-Host "[4/7] MATLAB MCP Server..." -ForegroundColor Yellow
     $mcpDir = "$HOME\matlab-mcp-server"
     $mcpBin = "$mcpDir\matlab-mcp-server-windows-x64.exe"
     if (-not (Test-Path $mcpBin)) {
@@ -87,7 +89,7 @@ if ($matlabRoot) {
 }
 
 # --- 5. Skills + plugins ----------------------------------------------------
-Write-Host "[5/6] Skills and plugins..." -ForegroundColor Yellow
+Write-Host "[5/7] Skills and plugins..." -ForegroundColor Yellow
 if (Get-Command claude -ErrorAction SilentlyContinue) {
     try {
         claude plugin marketplace add "https://github.com/matlab/matlab-agentic-toolkit" 2>$null
@@ -101,8 +103,28 @@ try {
     Write-Host "  Installed K-Dense matlab skill." -ForegroundColor Green
 } catch { Write-Host "  (skill step skipped)" -ForegroundColor DarkYellow }
 
-# --- 6. Auto-push opt-in ----------------------------------------------------
-Write-Host "[6/6] Learning-loop auto-push..." -ForegroundColor Yellow
+# --- 6. Robot Structural Analysis MCP (rsap-mcp, pinned) --------------------
+Write-Host "[6/7] Robot Structural Analysis MCP..." -ForegroundColor Yellow
+$robotFound = Test-Path "Registry::HKEY_CLASSES_ROOT\Robot.Application"
+if ($robotFound -or $WithRobot) {
+    # Third-party MIT server, pinned to a reviewed commit (see docs/14).
+    $rsapDir = "$repo\tools\rsap-mcp"
+    $rsapCommit = "08ab805b2edae7da8bfb43e7320ff977e4503a00"
+    if (-not (Test-Path $rsapDir)) {
+        git clone --quiet https://github.com/nhantruong96/rsap-mcp.git $rsapDir
+    }
+    git -C $rsapDir fetch --quiet origin
+    git -C $rsapDir checkout --quiet $rsapCommit
+    if (-not (Test-Path "$rsapDir\.venv")) { & $py -m venv "$rsapDir\.venv" }
+    & "$rsapDir\.venv\Scripts\python.exe" -m pip install --quiet --disable-pip-version-check -e $rsapDir
+    & "$rsapDir\.venv\Scripts\python.exe" -m rsap_mcp --selfcheck 2>$null
+    Write-Host "  rsap-mcp installed; registered via the repo's .mcp.json (server 'robot')." -ForegroundColor Green
+} else {
+    Write-Host "  Robot not detected - skipping. Re-run with -WithRobot to force." -ForegroundColor DarkYellow
+}
+
+# --- 7. Auto-push opt-in ----------------------------------------------------
+Write-Host "[7/7] Learning-loop auto-push..." -ForegroundColor Yellow
 $marker = "$repo\.claude\autopush.enabled"
 if ($EnableAutoPush) {
     New-Item -ItemType Directory -Force -Path "$repo\.claude" | Out-Null

@@ -3,6 +3,9 @@
 Driving **Robot Structural Analysis Professional** from Python via its COM API —
 the Robot counterpart to the MATLAB Engine API. **Windows + licensed Robot only.**
 
+> **Easier route:** let Claude drive Robot through the `robot` MCP —
+> [docs/14](../../docs/14-robot-mcp.md) · suomeksi: [robot-mcp-kayttoonotto.md](robot-mcp-kayttoonotto.md)
+
 | File | What it does | Needs Robot? |
 |---|---|---|
 | `robot_beam_example.py` | Connects to Robot via COM, creates a simply-supported beam (2 nodes + 1 bar), prints counts | ✅ |

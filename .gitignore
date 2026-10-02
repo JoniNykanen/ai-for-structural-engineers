@@ -44,3 +44,6 @@ Thumbs.db
 # Filled NA parameter files hold the user's licensed values — keep only templates
 params/*.yaml
 !params/*.example.yaml
+
+# Third-party Robot MCP server, cloned by setup.ps1 (docs/14)
+tools/
