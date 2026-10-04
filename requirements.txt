@@ -5,6 +5,7 @@ scipy>=1.11
 sympy>=1.12
 matplotlib>=3.8
 pyyaml>=6.0    # reads the NA parameter files for the eurocode-fi module (docs/11)
+pytest>=8.0    # runs the physics self-checks in tests/ (also in CI)
 
 # --- Optional: only if you have a MATLAB license and want Method 2 ---
 # The MATLAB Engine API for Python. The version MUST match your installed

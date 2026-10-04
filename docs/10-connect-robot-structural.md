@@ -61,8 +61,10 @@ RobotOM idioms.
 - **Claude knows this API far less than MATLAB** → more risk of wrong calls. The
   `robot-structural` skill + the Product Help MCP (part A) are the countermeasures.
 - COM is **Windows-only, single-threaded, brittle**; Robot is heavyweight.
-- **Not tested in this repo** (no Robot installed here) — the example is a
-  template to verify on your Robot machine.
+- **Experimental: untested against a real Robot install** (no Robot on the
+  authoring machine). The example is a template to verify on your Robot
+  machine. The Robot MCP in docs/14 has the same status: MCP handshake
+  verified, nothing run against Robot itself.
 - A more robust route for big jobs is the **.NET** API (`RobotOM.tlb`), but that
   adds a compile step; Python/COM is the pragmatic starting point.
 

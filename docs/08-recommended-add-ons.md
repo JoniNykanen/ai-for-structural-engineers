@@ -25,6 +25,43 @@ what to skip. Every recommendation here was cross-checked against primary
 
 ---
 
+## What each installed skill does
+
+"Skills" are curated instruction packs that teach Claude *how* to do a specific
+kind of work. Claude loads one automatically when your request matches it (or you
+can force one by name). Here's the set this kit uses and when each fires.
+
+### General math / symbolic skills
+
+| Skill | What it does | Best for (plasticity) |
+|---|---|---|
+| **`math`** | Unified math helper — routes your request to computation, equation-solving, or step-by-step explanation. The generalist. | Any calculation where you want the working shown: yield checks, factors of safety, solving equilibrium equations. |
+| **`sympy-symbolic`** | Derives and solves equations **symbolically** using Python's SymPy. *Note: written with a fluid-dynamics/pump slant, so for pure plasticity the `math` skill is often the better generalist.* | Exact algebra with letters — e.g. deriving a yield function before plugging in numbers. |
+
+### MATLAB-specific skills
+
+| Skill | What it does | Best for (plasticity) |
+|---|---|---|
+| **`matlab-symbolic-math`** (MathWorks, *experimental*) | Generates correct **MATLAB Symbolic Math Toolbox** code: differentiation, integration, `solve`/`dsolve`, Laplace/Fourier transforms, and symbolic→numeric conversion. | Producing MATLAB code for a symbolic derivation (e.g. flow rule `∂f/∂σ`) you'll paste into MATLAB. **Needs the Symbolic Math Toolbox** (see the license note above). |
+| **`matlab`** (K-Dense-AI) | Plans, builds, reviews, and migrates **MATLAB *or* GNU Octave** numerical workflows — arrays, tables, tests, graphics, MAT files, Python interop. Docs pinned to R2026a. | A second-opinion reviewer on MATLAB code, or a **free Octave** fallback if you're off your MATLAB license. |
+
+### MATLAB Agentic Toolkit plugins (official MathWorks skill groups)
+
+| Plugin | What it does | Best for (plasticity) |
+|---|---|---|
+| **`matlab-core`** | Teaches Claude to **create, debug, test, review, and manage** idiomatic MATLAB code without hallucinating functions. Required base group. | Everyday MATLAB: writing a clean stress-analysis script, debugging an error, adding tests. |
+| **`math-and-optimization`** | Expertise for **Symbolic Math Toolbox**, Optimization Toolbox, and PDE Toolbox workflows. | Symbolic plasticity derivations done the MATLAB-idiomatic way; optimization/PDE work *if* you license those toolboxes later. |
+
+> **Why only these?** Agents trigger skills more reliably when fewer are loaded,
+> so this kit stays lean and plasticity-focused. Add more groups (e.g.
+> `matlab-programming`, `control-systems`) anytime — see the next section.
+
+> **Two things to remember:** (1) skills load at **session start** — restart
+> Claude Code after installing. (2) Force any skill by name, e.g.
+> `/matlab-write-tests`.
+
+---
+
 ## ⭐ MATLAB Agentic Toolkit — skill groups (recommended)
 
 The **official MathWorks** [MATLAB Agentic Toolkit](https://github.com/matlab/matlab-agentic-toolkit)

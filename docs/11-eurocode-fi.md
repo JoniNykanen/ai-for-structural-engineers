@@ -34,6 +34,20 @@ cp params/na_timber.example.yaml params/na_timber.yaml
 Puuttuva arvo → työkalu **pysähtyy** ja kertoo mikä kenttä ja pykälä täyttää.
 Ei arvausta.
 
+**Kuormayhdistelmät (EN 1990 6.10a/6.10b).** `glulam_beam_ec5.py` laskee kaksi
+ULS-yhdistelmää ja valitsee määräävän suurimman `q_d / k_mod` -suhteen mukaan:
+- **6.10a** — vain pysyvä kuorma, kerroin `actions.gamma_G_610a`, `k_mod.permanent`
+- **6.10b** — pysyvä + lumi, kertoimet `actions.gamma_G_610b` ja `actions.gamma_Q`,
+  `k_mod` lumen aikaluokan mukaan
+
+**Lumen aikaluokka** on normivalinta (EN 1995-1-1 Table 2.2 + SFS-NA), joten se
+on parametritiedostossa: `actions.snow_duration: long_term` tai `medium_term`.
+Valittu luokka näkyy laskumuistiossa.
+
+Jos parametritiedoston kommenteissa lukee `DUMMY` tai `TEST` (esim.
+`tests/fixtures/na_timber.test.yaml`), laskumuistio sanoo sen eikä väitä arvoja
+lisensoidusta normista otetuiksi.
+
 ## Verifiointi (taso 2)
 
 Jokainen lasku (a) dokumentoi itsensä pykäläviittauksin ja (b) **lasketaan

@@ -1,0 +1,42 @@
+# TEST-ONLY — NOT standard values.
+# ============================================================================
+# Artificial round numbers used only by tests/test_glulam_ec5.py so the expected
+# results can be hand-computed. They are deliberately NOT Eurocode / SFS-NA /
+# EN 14080 values. Never use this file for design.
+
+material:
+  grade: TEST
+  f_m_k: 20.0        # N/mm^2  (artificial)
+  f_v_k: 2.0         # N/mm^2  (artificial)
+  f_t90_k: 1.0       # N/mm^2  (artificial)
+  E0_mean: 10000.0   # N/mm^2  (artificial)
+  E0_05: 8000.0      # N/mm^2  (artificial)
+  rho_k: 400.0       # kg/m^3  (artificial)
+
+partial_factors:
+  gamma_M: 1.0       # (artificial)
+
+service_class: 1
+
+k_mod:               # (artificial)
+  permanent: 0.4
+  long_term: 0.5
+  medium_term: 0.6
+  short_term: 0.7
+  instantaneous: 0.8
+
+k_def: 1.0           # (artificial)
+k_cr: 1.0            # (artificial)
+
+actions:
+  gamma_G_610a: 2.0  # (artificial)
+  gamma_G_610b: 1.0  # (artificial)
+  gamma_Q: 2.0       # (artificial)
+  KFI: 1.0           # (artificial)
+  psi0_snow: 0.5     # (artificial)
+  psi2_snow: 0.5     # (artificial)
+  snow_duration: medium_term
+
+deflection_limits:
+  w_inst_ratio: 200      # L/200 (artificial)
+  w_net_fin_ratio: 100   # L/100 (artificial)

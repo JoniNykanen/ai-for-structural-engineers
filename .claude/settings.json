@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/capture_session.py\" 2>/dev/null || true",
+            "command": "for p in \"$CLAUDE_PROJECT_DIR/.venv/Scripts/python.exe\" \"$CLAUDE_PROJECT_DIR/.venv/bin/python\" python3 python py; do if \"$p\" -c 'import sys; sys.exit(sys.version_info < (3, 8))' </dev/null >/dev/null 2>&1; then \"$p\" \"$CLAUDE_PROJECT_DIR/.claude/hooks/capture_session.py\" 2>>\"$CLAUDE_PROJECT_DIR/.claude/hooks/hook_errors.log\"; exit 0; fi; done; echo \"capture_session: no Python 3.8+ found (tried .venv, python3, python, py)\" >>\"$CLAUDE_PROJECT_DIR/.claude/hooks/hook_errors.log\"; exit 0",
             "statusMessage": "Saving session to solved/…",
             "timeout": 30
           }
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/push_session.py\" 2>/dev/null || true",
+            "command": "for p in \"$CLAUDE_PROJECT_DIR/.venv/Scripts/python.exe\" \"$CLAUDE_PROJECT_DIR/.venv/bin/python\" python3 python py; do if \"$p\" -c 'import sys; sys.exit(sys.version_info < (3, 8))' </dev/null >/dev/null 2>&1; then \"$p\" \"$CLAUDE_PROJECT_DIR/.claude/hooks/push_session.py\" 2>>\"$CLAUDE_PROJECT_DIR/.claude/hooks/hook_errors.log\"; exit 0; fi; done; echo \"push_session: no Python 3.8+ found (tried .venv, python3, python, py)\" >>\"$CLAUDE_PROJECT_DIR/.claude/hooks/hook_errors.log\"; exit 0",
             "statusMessage": "Pushing session data…",
             "timeout": 90
           }

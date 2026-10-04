@@ -3,6 +3,22 @@
 % MATLAB equivalent of von_mises_yield_check.py.
 % Run in MATLAB, or have Claude run it via the Engine API / MCP server.
 
+%% Self-check: how to verify the AI's answer
+% Test the formulas on stress states with a known textbook answer first:
+%   uniaxial sigma -> von Mises = sigma;  pure shear tau -> von Mises = sqrt(3)*tau,
+%   Tresca = 2*tau;  hydrostatic pressure -> 0 (no yielding).
+% If a known case fails, do not trust the result for your real problem.
+vmOf     = @(S) sqrt(0.5*sum((sort(eig(S)) - circshift(sort(eig(S)), 1)).^2));
+trescaOf = @(S) max(eig(S)) - min(eig(S));
+tau_chk  = 50;
+assert(abs(vmOf(diag([100 0 0])) - 100) < 1e-9, 'uniaxial: von Mises should equal sigma');
+assert(abs(vmOf([0 tau_chk 0; tau_chk 0 0; 0 0 0]) - sqrt(3)*tau_chk) < 1e-9, ...
+       'pure shear: von Mises should equal sqrt(3)*tau');
+assert(abs(trescaOf([0 tau_chk 0; tau_chk 0 0; 0 0 0]) - 2*tau_chk) < 1e-9, ...
+       'pure shear: Tresca should equal 2*tau');
+assert(vmOf(-80*eye(3)) < 1e-9, 'hydrostatic stress must give zero von Mises stress');
+clear vmOf trescaOf tau_chk
+
 % --- Inputs (edit these) ---
 sigma = [180  40   0;
           40  60   0;

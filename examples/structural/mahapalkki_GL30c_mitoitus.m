@@ -7,7 +7,7 @@
 %[text] Kuormat on annettu erillisinä ominaisarvoina. Keskeiset oletukset:
 %[text] - Jänneväli `L = 21 m`, vapaasti tuettu palkki
 %[text] - Materiaali GL30c: `f_m,k = 30`, `f_v,k = 3,5`, `f_t,90,k = 0,5 MPa`, `E_0,mean = 13000 MPa`
-%[text] - Kuormat: pysyvä `G = 3`, lumi `Q1 = 12` (pitkäaikainen), hetkellinen `Q2 = 9 kN/m`
+%[text] - Kuormat: pysyvä `G = 3`, lumi `Q1 = 12` (keskipitkä, SFS-EN 1995-1-1 NA 2.3.1.2(2)P), hetkellinen `Q2 = 9 kN/m`
 %[text] - Käyttöluokka 2: `k_def = 0,8`; osavarmuus `gamma_M = 1,25`; seuraamusluokka CC2 `K_FI = 1,0`
 %[text] - Sivutuettu puristusreuna: `k_crit = 1,0` \
 L = 21;                       % m, jänneväli
@@ -17,8 +17,8 @@ psi0_2 = 0.6; psi2_2 = 0.0;   % hetkellinen (Q2)
 KFI = 1.0;
 fmk = 30; fvk = 3.5; ft90k = 0.5;   % MPa, GL30c
 E0mean = 13000;               % MPa
-gM = 1.25; kdef = 0.8; kcr = 0.67;
-kmod_p = 0.60; kmod_lt = 0.70; kmod_i = 1.10;   % pysyvä / pitkäaikainen / hetkellinen (käyttöluokka 2)
+gM = 1.25; kdef = 0.8; kcr = 1.0;   % k_cr = 1,0 liimapuulle (NA 6.1.7(2))
+kmod_p = 0.60; kmod_mt = 0.80; kmod_i = 1.10;   % pysyvä / keskipitkä (lumi) / hetkellinen (käyttöluokka 2)
 %%
 %[text] ## 2. Kuormayhdistelmät (EN 1990, 6.10a/6.10b)
 %[text] Ratkaisevaa ei ole suurin kuorma vaan suurin suhde `q_d / k_mod`, koska lyhin aikaluokka yhdistelmässä määrää `k_mod`-kertoimen. Lasketaan kaikki yhdistelmät ja valitaan määräävä.
@@ -27,7 +27,7 @@ qd_all = [ 1.35*KFI*G ; ...
            1.15*KFI*G + 1.5*KFI*Q1 + 1.5*KFI*psi0_2*Q2 ; ...
            1.15*KFI*G + 1.5*KFI*Q2 + 1.5*KFI*psi0_1*Q1 ; ...
            1.15*KFI*G + 1.5*KFI*Q2 ];
-kmod_all = [kmod_p ; kmod_lt ; kmod_i ; kmod_i ; kmod_i];
+kmod_all = [kmod_p ; kmod_mt ; kmod_i ; kmod_i ; kmod_i];
 names = ["1.35G";"1.15G+1.5S";"1.15G+1.5S+0.9W";"1.15G+1.5W+1.05S";"1.15G+1.5W"];
 ratio = qd_all ./ kmod_all;
 [~, ig] = max(ratio);
@@ -36,7 +36,7 @@ T = table(names, round(qd_all,2), kmod_all, round(ratio,1), ... %[output:group:0
     'VariableNames', {'Yhdistelma','qd_kNm','kmod','qd_per_kmod'}) %[output:group:05c29ba4] %[output:76aee5a7]
 %%
 %[text] ## 2.1 Yhdistelmien vertailu
-%[text] Pylväät esittävät suhteen `q_d / k_mod`. Korkein pylväs on mitoittava — tässä pelkkä lumi (pitkäaikainen), vaikka lumi+tuuli antaa suuremman kokonaiskuorman.
+%[text] Pylväät esittävät suhteen `q_d / k_mod`. Korkein pylväs on mitoittava — tässä lumi + tuuli (hetkellinen) aivan niukasti ennen pelkkää lunta (keskipitkä). Ero on alle 1 %, joten molemmat ovat käytännössä yhtä määrääviä.
 cats = reordercats(categorical(names, names), names);
 bar(cats, ratio) %[output:75ba5ec8]
 title('Kuormayhdistelmien vertailu (määräävä = korkein)') %[output:75ba5ec8]
@@ -126,11 +126,11 @@ radial = table(round(ft90d,3), round(kdis*kvol*ft90d,3), round(r_min,1), ... %[o
     'VariableNames', {'ft90d_MPa','sallittu_MPa','r_min_m'}) %[output:group:6fb23a28] %[output:09536993]
 %%
 %[text] ## 7. Yhteenveto
-%[text] - Määräävä yhdistelmä: `1,15G + 1,5S` (pitkäaikainen), `q_d = 21,45 kN/m`, `k_mod = 0,70`
-%[text] - `M_Ed = 1182 kNm`, `V_Ed = 225 kN`
+%[text] - Määräävä yhdistelmä: lumi + tuuli (hetkellinen), `q_d = 29,55 kN/m`, `k_mod = 1,10` — niukasti ennen pelkkää lunta (keskipitkä, `q_d/k_mod` 26,9 vs 26,8)
+%[text] - `M_Ed = 1629 kNm`, `V_Ed = 310 kN`
 %[text] - **Valittu poikkileikkaus: b × h = 215 × 1575 mm** (35 lamellia)
 %[text] - Mitoittava ehto on taipuma (käyttöaste noin 98 %); mahapalkin esikorotus keventää tätä, tai valitse 215 × 1620 mm marginaaliksi
-%[text] - Kaaren säde harjalla oltava noin `r_in >= 24 m` säteittäisvedon vuoksi; lamelli 45 mm kelpaa (`k_r = 1`) \
+%[text] - Kaaren säde harjalla oltava noin `r_in >= 21,3 m` säteittäisvedon vuoksi; lamelli 45 mm kelpaa (`k_r = 1`) \
 
 %[appendix]{"version":"1.0"}
 %---

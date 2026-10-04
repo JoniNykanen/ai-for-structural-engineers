@@ -28,8 +28,40 @@ question/solution pairs to `solved/YYYY-MM-DD_<session>.md`, indexed in
 `USAGE_LOG.md`. Stdlib-only Python, never blocks your session. You do nothing —
 it just accumulates.
 
+What the capture does for you:
+
+- **Redacts secrets before writing.** API keys (`sk-…`, `ghp_…`, `AKIA…`, …),
+  bearer tokens, JWTs, private-key blocks, `password=…` / `token: …` style
+  values and email addresses are replaced with `[REDACTED]` /
+  `[REDACTED_EMAIL]`. This is a safety net for *obvious* patterns, not a
+  guarantee — still don't paste real credentials into a session.
+- **Caps the file size.** Each session file is capped at ~200 KB; anything past
+  that is cut and a "Truncated" note is added at the end.
+- **Is idempotent.** It runs every turn but keeps exactly one file and one
+  `USAGE_LOG.md` line per session.
+- **Finds Python on any OS.** The hook tries the repo `.venv` first, then
+  `python3`, `python` and `py`, and runs the script exactly once.
+- **Logs its own errors.** Failures never interrupt you; they are appended to
+  `.claude/hooks/hook_errors.log` (gitignored). If `solved/` stops filling up,
+  look there first.
+
 > **Activation:** hooks load at session start. After cloning or first setup,
 > restart Claude Code (or open `/hooks` once) so the hook registers.
+
+### Opt out of capture on this machine
+
+Create the (gitignored) marker file `.claude/capture.disabled`:
+
+```bash
+echo disabled > .claude/capture.disabled      # macOS/Linux/Git Bash
+```
+```powershell
+Set-Content .claude\capture.disabled disabled  # Windows PowerShell
+```
+
+While it exists, **both** hooks do nothing: no `solved/` file, no
+`USAGE_LOG.md` line, no commit, no push — even if auto-push is enabled. Delete
+the file to turn capture back on.
 
 ### Optional: auto-push the data to the repo
 
@@ -49,8 +81,21 @@ bash setup.sh --autopush           # macOS/Linux
 echo enabled > .claude/autopush.enabled
 ```
 
-Disable by deleting that file. The push is scoped to `solved/` + `USAGE_LOG.md`
-only — it never touches your other working changes.
+Disable by deleting that file. What the push will and won't do:
+
+- **Commits only `solved/` + `USAGE_LOG.md`** (explicit pathspec). Anything else
+  you had staged stays staged and is *not* included in the auto-commit.
+- **Never pushes your own commits.** If your branch already has unpushed
+  commits of yours, the capture is committed locally but not pushed — run
+  `git push` yourself when you're ready.
+- **Syncs before pushing.** If the remote moved on (e.g. another machine pushed
+  its sessions), it runs `git pull --rebase --autostash` first, merging
+  `USAGE_LOG.md` line by line so two machines' log lines don't conflict.
+- **Skips safely** on a detached HEAD or during a merge/rebase, and never waits
+  for a password prompt.
+- **Reports failures** (no upstream, rejected push, rebase conflict, timeout)
+  in `.claude/hooks/hook_errors.log`. The local commit is kept, so the next
+  session — or a manual `git push` — delivers it.
 
 ## 2. Review — weekly, ~10 minutes
 
@@ -87,7 +132,8 @@ work*.
 
 - `solved/` grows over time. It's committed (your knowledge base), but the repo
   is **private** — keep it private if sessions contain anything sensitive.
-- To pause capture: `/hooks` → disable, or set `"disableAllHooks": true` in
-  `.claude/settings.local.json`.
+- To pause capture: create `.claude/capture.disabled` (see "Opt out" above).
+  `/hooks` → disable, or `"disableAllHooks": true` in
+  `.claude/settings.local.json`, also work but turn off *all* hooks.
 - To prune: delete old `solved/*.md` you've already learned from; the log line
   can stay or go.
