@@ -33,6 +33,10 @@ Thumbs.db
 
 # Per-machine auto-push opt-in marker (each user enables locally)
 .claude/autopush.enabled
+# Per-machine capture opt-out marker (disables capture AND push; docs/09)
+.claude/capture.disabled
+# Local hook error log (capture/push failures; docs/09)
+.claude/hooks/hook_errors.log
 
 # Third-party agent skills installed locally (install per docs/08, don't vendor)
 .agents/
