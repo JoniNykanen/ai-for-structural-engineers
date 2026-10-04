@@ -3,7 +3,33 @@
 Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
+### Fixed
+- **Ramberg–Osgood example** mixed two forms (α=0.002 with the σy/E factor),
+  giving a plastic strain at σy of 2.5e-6 instead of 0.002. Now uses the 0.2 %
+  offset form; regression-tested. Also: plastic-hinge note (collapse > first
+  yield for *all* beams via shape factor), hydrostatic divide-by-zero in von Mises.
+- **glulam_beam_ec5.py**: separate EN 1990 6.10a/6.10b combinations
+  (`gamma_G_610a`/`gamma_G_610b`), snow duration class read from params
+  (`actions.snow_duration`), truly independent numeric cross-check (exit 2 on
+  mismatch), calc note flags DUMMY/TEST params. **Breaking:** filled
+  `params/na_timber.yaml` files need these three new fields.
+- **Auto-push hook** committed anything already staged; now commits only the
+  captured paths, rebases before push, logs errors to `.claude/hooks/hook_errors.log`.
+- **Hooks** now find Python on macOS/Linux/Windows (venv → python3 → python → py).
+- **Setup scripts** check every external command and report failures honestly;
+  closing prompt suggests a Python first win when MATLAB is absent.
+### Changed
+- README: prerequisites checklist, 4-step quickstart, everything else under
+  "Optional extras" (Robot marked experimental); skills tables moved to docs/08.
+- CLAUDE.md: use the repo venv Python; every calculation answer includes a check.
 ### Added
+- **Tests + CI**: `tests/` (pytest, 30 tests: example self-checks, EC5 golden
+  values on TEST-ONLY params, hooks) and `.github/workflows/tests.yml`.
+- `self_check()` physics checks in every Python plasticity/SymPy example.
+- Session capture: secret/email redaction, 200 KB cap, opt-out via
+  `.claude/capture.disabled`; disclosed in README.
+- `docs/15-verify-ai-results.md` and `docs/16-academic-integrity.md`.
+- Pinned MATLAB MCP server v0.14.0 (SHA-256 checked) and `skills@1.7.0`.
 - **Robot MCP** (`docs/14`): project `.mcp.json` registers server `robot` —
   third-party MIT [`rsap-mcp`](https://github.com/nhantruong96/rsap-mcp), 35 tools
   (model → loads → calculate → results), pinned to reviewed commit `08ab805`.

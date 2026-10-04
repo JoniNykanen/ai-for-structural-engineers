@@ -42,6 +42,8 @@ Steel (EN 1993), concrete (EN 1992), loads (EN 1990/1991); PDF review report
 (Level 3). Framework is generic so these add without rework.
 
 ## Verification of the implementation
-Happy path runs (utilisations sane, cross-check OK, note written); guardrail
-stops on the blank template; filled params file is gitignored. Tested with dummy
-values on Python 3.11 (no MATLAB needed).
+Originally checked by hand only: the happy path was run once with dummy values
+on Python 3.11 (utilisations sane, cross-check OK, note written), the guardrail
+stopped on the blank template, and the filled params file is gitignored. There
+were no automated tests at that point. Automated tests now exist in
+`tests/test_glulam_ec5.py` (pytest, run in CI). No MATLAB needed.

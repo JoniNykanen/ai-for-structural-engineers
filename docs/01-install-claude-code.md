@@ -100,10 +100,14 @@ it up:
 - `Ctrl+Shift+P` → **"Developer: Reload Window"**, then start a new Claude session, **or**
 - restart VS Code.
 
-You do **not** need to reinstall anything — just reload. Verify with:
+You do **not** need to reinstall anything — just reload. Verify with (works
+without MATLAB):
 ```
-List your MATLAB MCP tools and run detect_matlab_toolboxes.
+Using the repo's Python (.venv), compute the von Mises stress for pure shear
+τ = 100 MPa and check it equals √3·τ ≈ 173.2 MPa. Show the code you ran.
 ```
+If you also set up MATLAB, you can additionally ask: *"List your MATLAB MCP
+tools and run detect_matlab_toolboxes."*
 
 > **Which should I use?** The extension is friendlier for beginners (buttons,
 > inline diffs); the terminal CLI is identical in capability. Both read the same

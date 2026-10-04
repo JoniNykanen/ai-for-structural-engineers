@@ -4,6 +4,10 @@
 Analysis Professional through tools — the same way the MATLAB MCP (docs/04)
 lets it run MATLAB. Windows + installed, licensed Robot required.*
 
+> **Status: experimental.** The MCP handshake (and `rsap_status`) is verified;
+> it is **untested against a real Robot install**. Treat every result as
+> unverified until you have checked it yourself.
+
 > 🇫🇮 Suomeksi, lyhyesti: [examples/robot/robot-mcp-kayttoonotto.md](../examples/robot/robot-mcp-kayttoonotto.md)
 
 ```
@@ -22,8 +26,10 @@ generating raw RobotOM code, so there is far less room for invented API calls.
 third-party, **MIT-licensed** MCP server (not by Autodesk). Written for Robot
 **2027**; older versions may work but are untested.
 
-- **Pinned** to commit `08ab805` (reviewed: only COM calls + stdio — no network,
-  no subprocesses, no eval). `setup.ps1` checks out exactly that commit.
+- **Pinned** to commit `08ab805`. The source was read before pinning (only COM
+  calls + stdio — no network, no subprocesses, no eval). That is a code read,
+  not a test: the server has not been run against Robot. `setup.ps1` checks out
+  exactly that commit.
 - Installed to `tools/rsap-mcp/` (gitignored) with its own `.venv`.
 - Registered for this repo in **`.mcp.json`** as server **`robot`** — every
   clone gets it; Claude Code asks you to approve it once.
@@ -78,7 +84,7 @@ sanity-check (repo CLAUDE.md rule 3).
 
 - **Third-party, young project** (0 stars at time of review). Re-review the
   diff before bumping the pinned commit.
-- **Not tested end-to-end in this repo** — verified only up to the MCP
+- **Untested against a real Robot install** — verified only up to the MCP
   handshake and `rsap_status` (no Robot on the authoring machine).
 - **Write access by default**: tools create/modify/save models. Work on copies
   of real projects.
