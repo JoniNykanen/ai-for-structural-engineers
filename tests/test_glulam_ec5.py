@@ -92,6 +92,27 @@ def test_610a_governs_large_gk_small_sk():
     assert r["util_v"] == pytest.approx(1.875)
 
 
+@pytest.mark.parametrize("u,ok,phrase", [
+    (0.65, True, "alle tavoitealueen"),
+    (0.70, True, "Tavoitealueella"),
+    (0.80, True, "Tavoitealueella"),
+    (0.85, True, "yli tavoitealueen"),
+    (0.8999, True, "yli tavoitealueen"),
+    (0.90, False, "HYLÄTTY"),        # raja on "alle 90 %": tasan 90 % hylätään
+    (1.20, False, "HYLÄTTY"),
+])
+def test_utilisation_policy(u, ok, phrase):
+    assert (ec5.util_label(u) == "OK") is ok
+    assert phrase in ec5.util_verdict(u)
+
+
+def test_overutilised_section_fails_policy():
+    # Same case as test_610a_governs...: util_m = 1.875 -> rejected
+    r = ec5.calculate(FIXTURE, {**SECTION, "g_k": 10.0, "s_k": 1.0})
+    assert not r["util_ok"]
+    assert r["util_max"] == pytest.approx(1.875)
+
+
 def test_snow_duration_selects_kmod(tmp_path):
     # long_term -> kmod_snow = 0.5 ; 6.10b qd = 9.0, qd/kmod = 18 (> 5) -> governs
     # f_m_d = 0.5*20 = 10 ; util_m = 6.75/10 = 0.675
@@ -153,7 +174,17 @@ def test_cli_exits_nonzero_when_cross_check_fails(tmp_path, monkeypatch, capsys)
     assert "ERO HAVAITTU" in note.read_text(encoding="utf-8")
 
 
-def test_cli_ok_and_note_flags_test_params(tmp_path, capsys):
+def test_cli_exits_3_when_utilisation_policy_fails(tmp_path, monkeypatch):
+    # Default INPUTS on the TEST fixture: util_max = 1.19 (bending) -> rejected
+    monkeypatch.setattr(ec5, "INPUTS", {**SECTION, "g_k": 10.0, "s_k": 1.0})
+    note = tmp_path / "note.md"
+    assert ec5.main([FIXTURE], note_path=str(note)) == 3
+    assert "HYLÄTTY" in note.read_text(encoding="utf-8")
+
+
+def test_cli_ok_and_note_flags_test_params(tmp_path, monkeypatch, capsys):
+    # Lightly loaded case (util_max = 0.56) so the utilisation policy passes
+    monkeypatch.setattr(ec5, "INPUTS", {**SECTION, "g_k": 1.0, "s_k": 4.0})
     note = tmp_path / "note.md"
     assert ec5.main([FIXTURE], note_path=str(note)) == 0
     text = note.read_text(encoding="utf-8")

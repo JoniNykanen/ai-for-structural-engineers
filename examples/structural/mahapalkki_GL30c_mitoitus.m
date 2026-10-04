@@ -68,40 +68,45 @@ title('Leikkausvoima V(x)') %[output:85283c86]
 xlabel('x (m)'); ylabel('V (kN)'); grid on %[output:85283c86]
 %%
 %[text] ## 4. Poikkileikkauksen valinta
-%[text] Etsitään pienin standardikorkeus (lamelli 45 mm) kolmelle leveydelle, joka läpäisee taivutuksen, leikkauksen ja taipuman. Mitoituslujuudet `f_m,d = k_mod*f_m,k/gamma_M` ja `f_v,d = k_mod*f_v,k/gamma_M`. Leikkauksessa tehollinen leveys `k_cr*b`.
+%[text] **Käyttöastepolitiikka** (suunnittelijan oma valinta, tiukempi kuin normi): suurimman käyttöasteen on oltava **alle 90 %**, ja tavoitealue on **70–80 %**. Siksi etsitään pienin standardikorkeus (lamelli 45 mm) kolmelle leveydelle, jolla taivutuksen, leikkauksen ja taipuman suurin käyttöaste on enintään 80 %. Mitoituslujuudet `f_m,d = k_mod*f_m,k/gamma_M` ja `f_v,d = k_mod*f_v,k/gamma_M`. Leikkauksessa tehollinen leveys `k_cr*b`.
 q_char = G + Q1 + psi0_2*Q2;  % SLS ominaisyhdistelmä (hetkellinen taipuma)
 q_fin  = G*(1+kdef) + Q1*(1+psi2_1*kdef) + Q2*(psi0_2+psi2_2*kdef);  % lopputaipuma virumalla
 wlim = L*1000/300;            % mm, taipumaraja L/300
+u_max = 0.90;                 % ehdoton raja: suurin käyttöaste < 90 %
+u_target = [0.70 0.80];       % tavoitealue
 b_list = [190 215 240]; t = 45;
 res = [];
 for b = b_list
-    for n = 10:45
+    for n = 10:50
         h = n*t;
         W = b*h^2/6; I = b*h^3/12;
         sig = MEd*1e6/W;
         tau = 1.5*VEd*1e3/(kcr*b*h);
         wi  = 5*q_char*(L*1000)^4/(384*E0mean*I);
         wf  = 5*q_fin *(L*1000)^4/(384*E0mean*I);
-        if sig<=fmd && tau<=fvd && wi<=wlim && wf<=wlim
-            res = [res; b, h, round(sig,2), round(tau,2), round(wi,1), round(wf,1)];
+        umax = max([sig/fmd, tau/fvd, wi/wlim, wf/wlim]);
+        if umax <= u_target(2)
+            res = [res; b, h, round(sig,2), round(tau,2), round(wi,1), round(wf,1), round(100*umax,1)];
             break
         end
     end
 end
-Tsec = array2table(res, 'VariableNames', {'b_mm','h_mm','sigma_m_MPa','tau_MPa','w_inst_mm','w_net_fin_mm'}) %[output:9749cbea]
+Tsec = array2table(res, 'VariableNames', {'b_mm','h_mm','sigma_m_MPa','tau_MPa','w_inst_mm','w_net_fin_mm','max_kayttoaste_pct'}) %[output:9749cbea]
 %%
 %[text] ## 4.1 Valittu poikkileikkaus ja käyttöasteet
-%[text] Valitaan **b × h = 215 × 1575 mm** (35 lamellia à 45 mm). Kaikki käyttöasteet jäävät alle 100 %. Taipuma on mitoittava.
-b_sel = 215; h_sel = 1575;
+%[text] Valitaan leveys 215 mm ja sille taulukon pienin korkeus, jolla suurin käyttöaste on enintään 80 %. Taipuma on mitoittava.
+b_sel = 215; h_sel = res(res(:,1)==b_sel, 2);
 I_sel = b_sel*h_sel^3/12; W_sel = b_sel*h_sel^2/6;
 sig_sel = MEd*1e6/W_sel;
 tau_sel = 1.5*VEd*1e3/(kcr*b_sel*h_sel);
 wf_sel  = 5*q_fin*(L*1000)^4/(384*E0mean*I_sel);
 util = [sig_sel/fmd, tau_sel/fvd, wf_sel/wlim]*100;   % %
+assert(max(util) < 100*u_max, 'Suurin käyttöaste %.1f %% >= %.0f %% -- poikkileikkaus hylätään', max(util), 100*u_max);
 cu = reordercats(categorical({'Taivutus','Leikkaus','Taipuma'}), {'Taivutus','Leikkaus','Taipuma'});
 bar(cu, util) %[output:823d6dec]
-yline(100, '--r', 'raja 100 %') %[output:823d6dec]
-title('Käyttöasteet: 215 x 1575 mm') %[output:823d6dec]
+yline(100*u_max, '--r', 'raja 90 %') %[output:823d6dec]
+yline(100*u_target(2), ':k', 'tavoite 70–80 %') %[output:823d6dec]
+title(sprintf('Käyttöasteet: %d x %d mm', b_sel, h_sel)) %[output:823d6dec]
 ylabel('käyttöaste (%)'); grid on %[output:823d6dec]
 %%
 %[text] ## 5. Taipuma (SLS)
@@ -111,7 +116,7 @@ wcurve = q_fin .* xw .* ((L*1000)^3 - 2*(L*1000).*xw.^2 + xw.^3) / (24*E0mean*I_
 plot(xw/1000, wcurve, 'LineWidth', 1.5) %[output:911cf97a]
 yline(wlim, '--r', 'L/300') %[output:911cf97a]
 set(gca, 'YDir', 'reverse') %[output:911cf97a]
-title('Lopputaipuma w_{fin}(x), 215 x 1575 mm') %[output:911cf97a]
+title(sprintf('Lopputaipuma w_{fin}(x), %d x %d mm', b_sel, h_sel)) %[output:911cf97a]
 xlabel('x (m)'); ylabel('taipuma (mm, alaspäin)'); grid on %[output:911cf97a]
 %%
 %[text] ## 6. Kaarevan palkin säteittäinen vetojännitys
@@ -128,9 +133,9 @@ radial = table(round(ft90d,3), round(kdis*kvol*ft90d,3), round(r_min,1), ... %[o
 %[text] ## 7. Yhteenveto
 %[text] - Määräävä yhdistelmä: lumi + tuuli (hetkellinen), `q_d = 29,55 kN/m`, `k_mod = 1,10` — niukasti ennen pelkkää lunta (keskipitkä, `q_d/k_mod` 26,9 vs 26,8)
 %[text] - `M_Ed = 1629 kNm`, `V_Ed = 310 kN`
-%[text] - **Valittu poikkileikkaus: b × h = 215 × 1575 mm** (35 lamellia)
-%[text] - Mitoittava ehto on taipuma (käyttöaste noin 98 %); mahapalkin esikorotus keventää tätä, tai valitse 215 × 1620 mm marginaaliksi
-%[text] - Kaaren säde harjalla oltava noin `r_in >= 21,3 m` säteittäisvedon vuoksi; lamelli 45 mm kelpaa (`k_r = 1`) \
+%[text] - **Valittu poikkileikkaus: b × h = 215 × 1710 mm** (38 lamellia)
+%[text] - Suurin käyttöaste **76,8 % (taipuma)**, eli tavoitealueella 70–80 % ja alle 90 %:n rajan. Taivutus 58,9 %, leikkaus 41,1 %. Mahapalkin esikorotus keventää taipumaa entisestään.
+%[text] - Kaaren säde harjalla oltava noin `r_in >= 19,6 m` säteittäisvedon vuoksi; lamelli 45 mm kelpaa (`k_r = 1`) \
 
 %[appendix]{"version":"1.0"}
 %---

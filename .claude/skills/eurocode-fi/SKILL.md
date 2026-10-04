@@ -39,7 +39,16 @@ guessed number.
 For every check, output in Finnish:
 **Lähtötiedot** (inputs + units) → **Kaava** → **Pykälä** (e.g. "EN 1995-1-1
 §6.1.6") → **Sijoitus** (numbers) → **Tulos** (boxed, units) → **Käyttöaste**
-(utilisation `= E_d / R_d`). Flag utilisation > 1.0 clearly.
+(utilisation `= E_d / R_d`).
+
+**Utilisation policy (the designer's own rule, stricter than the code):** the
+largest utilisation of a design must be **below 90 %**; the target range is
+**70–80 %**. Mark any check ≥ 90 % as **HYLÄTTY** (rejected), even though the code
+allows up to 100 %. When choosing a section, pick the smallest one whose largest
+utilisation is ≤ 80 %. Always end with "Suurin käyttöaste X % (check)" plus a
+verdict: in the target range / above the target (80–90 %, consider a larger section) /
+below the target (< 70 %, possibly oversized). This policy is not a code value,
+so it can be stated in the repo.
 
 ## Rule 3 — Level-2 verification (independent re-check)
 

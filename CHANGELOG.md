@@ -19,6 +19,10 @@ Notable changes to this repo. Keep entries short; newest on top.
 - **Setup scripts** check every external command and report failures honestly;
   closing prompt suggests a Python first win when MATLAB is absent.
 ### Changed
+- **Utilisation policy** (designer's rule, stricter than the code): largest
+  utilisation must be < 90 % (else HYLÄTTY, `glulam_beam_ec5.py` exits 3),
+  target 70–80 %; sections are chosen at ≤ 80 %. Encoded in the eurocode-fi
+  skill and both timber examples — mahapalkki is now 215 × 1710 mm (76.8 %).
 - README: prerequisites checklist, 4-step quickstart, everything else under
   "Optional extras" (Robot marked experimental); skills tables moved to docs/08.
 - CLAUDE.md: use the repo venv Python; every calculation answer includes a check.
