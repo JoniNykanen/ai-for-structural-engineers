@@ -43,6 +43,32 @@ INPUTS = {
 
 SNOW_DURATIONS = ("long_term", "medium_term")   # sallitut actions.snow_duration
 CROSS_TOL = 1e-3                                 # suhteellinen toleranssi
+
+# Käyttöastepolitiikka (suunnittelijan oma valinta, EI normiarvo): suurimman
+# käyttöasteen on oltava alle 90 %; tavoitealue on 70–80 %.
+UTIL_MAX = 0.90
+UTIL_TARGET = (0.70, 0.80)
+
+
+def pct(u):
+    return f"{u * 100:.0f} %"
+
+
+def util_label(u):
+    """Yksittäisen tarkistuksen tila: OK alle UTIL_MAX:n, muuten HYLÄTTY."""
+    return "OK" if u < UTIL_MAX else f"HYLÄTTY (≥ {pct(UTIL_MAX)})"
+
+
+def util_verdict(u):
+    """Koko mitoituksen arvio suurimman käyttöasteen perusteella."""
+    lo, hi = UTIL_TARGET
+    if u >= UTIL_MAX:
+        return f"HYLÄTTY: suurin käyttöaste {pct(u)} ≥ {pct(UTIL_MAX)} — kasvata poikkileikkausta"
+    if u > hi:
+        return f"Hyväksytty, mutta yli tavoitealueen {pct(lo)}–{pct(hi)} — harkitse suurempaa poikkileikkausta"
+    if u >= lo:
+        return f"Tavoitealueella {pct(lo)}–{pct(hi)}"
+    return f"Hyväksytty, alle tavoitealueen {pct(lo)}–{pct(hi)} — poikkileikkaus voi olla ylimitoitettu"
 _MARKER = re.compile(r"\b(DUMMY|TEST)\b")        # merkintä parametritiedoston kommenteissa
 
 
@@ -236,6 +262,10 @@ def calculate(params_path=DEFAULT_PARAMS, inputs=None):
         "w_inst_lim": w_inst_lim, "w_fin_lim": w_fin_lim,
         "util_winst": util_winst, "util_wfin": util_wfin,
     }
+    utils = {"taivutus": util_m, "leikkaus": util_v, "w_inst": util_winst, "w_fin": util_wfin}
+    gov = max(utils, key=utils.get)
+    r["util_governing"], r["util_max"] = gov, utils[gov]
+    r["util_ok"] = utils[gov] < UTIL_MAX
     cc = cross_check(r)
     r["cross"] = cc
     r["cross_ok"] = cc["ok"]
@@ -248,7 +278,7 @@ def main(argv=None, note_path=None):
     v = calculate(path)
 
     def fmt(u):
-        return f"{u:.2f} {'OK' if u <= 1.0 else 'YLITTYY'}"
+        return f"{u:.2f} {util_label(u)}"
 
     cc = v["cross"]
     print("=== Liimapuupalkki — EN 1995-1-1 + SFS-NA ===")
@@ -266,11 +296,15 @@ def main(argv=None, note_path=None):
     worst = max(cc["deltas"].items(), key=lambda kv: kv[1])
     print(f"Ristiintarkistus (numeerinen integrointi: M, V, w): "
           f"{'OK' if cc['ok'] else 'EPÄONNISTUI'} (suurin suht. ero {worst[0]}: {worst[1]:.1e})")
+    print(f"Suurin käyttöaste: {pct(v['util_max'])} ({v['util_governing']}) → {util_verdict(v['util_max'])}")
 
     write_note(v, note_path)
     if not cc["ok"]:
         print("VIRHE: ristiintarkistus ei täsmää — tuloksia ei voi käyttää.", file=sys.stderr)
         return 2
+    if not v["util_ok"]:
+        print(f"VIRHE: suurin käyttöaste ≥ {pct(UTIL_MAX)} — poikkileikkaus ei kelpaa.", file=sys.stderr)
+        return 3
     return 0
 
 
@@ -279,7 +313,7 @@ def write_note(v, out=None):
     if out is None:
         out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "laskumuistio_liimapuupalkki.md")
     def uf(u):
-        return f"{u:.2f} ({'OK' if u <= 1.0 else 'YLITTYY'})"
+        return f"{u:.2f} ({util_label(u)})"
     try:
         shown = os.path.relpath(v["params_path"], REPO_ROOT).replace(os.sep, "/")
     except ValueError:                       # eri levyasema Windowsissa
@@ -327,6 +361,10 @@ qd = {v['qd']:.2f} kN/m, kmod = {v['kmod']}
 ## Taipuma (EN 1995-1-1 §2.2.3, §7.2)
 w_inst = {v['w_inst_tot']:.1f} mm (raja {v['w_inst_lim']:.1f} mm) → {uf(v['util_winst'])}
 w_fin = {v['w_fin']:.1f} mm (raja {v['w_fin_lim']:.1f} mm) → {uf(v['util_wfin'])}
+
+## Käyttöasteet yhteensä
+Suurin käyttöaste **{pct(v['util_max'])}** ({v['util_governing']}) → **{util_verdict(v['util_max'])}**
+(käyttöastepolitiikka: ehdoton raja < {pct(UTIL_MAX)}, tavoite {pct(UTIL_TARGET[0])}–{pct(UTIL_TARGET[1])}; suunnittelijan valinta, ei normiarvo)
 
 ## Verifiointi (taso 2)
 Riippumaton ristiintarkistus: tukireaktiot tasapainoehdoista, V(x) ja M(x)
