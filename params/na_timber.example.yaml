@@ -36,11 +36,14 @@ k_cr:         # -          crack factor for shear (effective width) — EN 1995-
 
 # Load-combination factors (ULS/SLS) — EN 1990 + SFS-NA
 actions:
-  gamma_G:    # -   permanent, unfavourable   — EN 1990 §6.4.3 + SFS-NA  [FILL]
+  gamma_G_610a:  # - permanent, unfav., expr. 6.10a (permanent only) — EN 1990 §6.4.3.2 + Table A1.2(B) + SFS-NA  [FILL]
+  gamma_G_610b:  # - permanent, unfav., expr. 6.10b (with leading variable) — EN 1990 §6.4.3.2 + Table A1.2(B) + SFS-NA  [FILL]
   gamma_Q:    # -   variable, leading          — EN 1990 + SFS-NA        [FILL]
   KFI:        # -   consequence-class factor   — EN 1990 + SFS-NA        [FILL]
   psi0_snow:  # -   combination factor, snow    — EN 1990 Table A1.1 + SFS-NA  [FILL]
   psi2_snow:  # -   quasi-permanent, snow       — EN 1990 + SFS-NA        [FILL]
+  snow_duration:  # load-duration class of snow: long_term OR medium_term (selects k_mod above)
+                  #   — EN 1995-1-1 Table 2.2 + SFS-NA  [FILL]
 
 # Deflection limits (as span/ratio) — SFS-NA to EN 1995-1-1 §7.2
 deflection_limits:
