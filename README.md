@@ -67,7 +67,7 @@ New to all of this? [docs/00 — What is this?](docs/00-what-is-this.md) explain
 - **Session capture and auto-push** — how the repo learns from use; `./setup.ps1 -EnableAutoPush` / `bash setup.sh --autopush` turns on pushing → [docs/09](docs/09-how-this-repo-learns.md)
 - **Eurocode + Finnish NA calcs (eurocode-fi)** — cited, checkable timber design → [docs/11](docs/11-eurocode-fi.md)
 - **Finnish reference tools (Puuinfo etc.)** — free tools for cross-checking → [docs/12](docs/12-suomalaiset-referenssityokalut.md)
-- **Autodesk Robot Structural Analysis** — *experimental, not tested end-to-end against a real Robot install* → [docs/10](docs/10-connect-robot-structural.md) (Product Help MCP + COM) and [docs/14](docs/14-robot-mcp.md) (Robot MCP)
+- **Autodesk Robot Structural Analysis** — *experimental; the Robot MCP is field-tested on Robot 2027, with known gaps* → [docs/10](docs/10-connect-robot-structural.md) (Product Help MCP + COM) and [docs/14](docs/14-robot-mcp.md) (Robot MCP)
 - **LinkedIn MCP** — read your own LinkedIn posts into Claude. *Not related to engineering.* → [docs/13](docs/13-linkedin-mcp.md)
 
 ### All docs
