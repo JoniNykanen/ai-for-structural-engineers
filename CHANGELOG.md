@@ -8,6 +8,9 @@ Notable changes to this repo. Keep entries short; newest on top.
   new *Field-tested notes* (what works, missing tools + workarounds for
   buckling / releases / load deletion, gotchas); same rules added to the
   `robot-structural` skill, README and the Finnish quickstart.
+### Removed
+- `docs/13` LinkedIn MCP guide — a personal tool, unrelated to engineering.
+  (Number 13 is left unused so other doc links stay stable.)
 ### Fixed
 - **Ramberg–Osgood example** mixed two forms (α=0.002 with the σy/E factor),
   giving a plastic strain at σy of 2.5e-6 instead of 0.002. Now uses the 0.2 %
@@ -44,10 +47,6 @@ Notable changes to this repo. Keep entries short; newest on top.
   (model → loads → calculate → results), pinned to reviewed commit `08ab805`.
   `setup.ps1` installs it to gitignored `tools/rsap-mcp/` when Robot is detected
   (or `-WithRobot`). Untested end-to-end here (no Robot on authoring machine).
-- **LinkedIn MCP** (`docs/13`, optional): guide to connect Claude to your own
-  LinkedIn posts via an open-source OAuth (official-API) MCP server — read-only,
-  for voice/style matching. Notes the Community Management API approval gate.
-  Machine-local (not committed); registration uses `-e` env creds.
 - **Finnish reference tools** (`docs/12`): curated links to Puuinfo's free
   EC5/RIL 205 timber tools (glulam beam, mahapalkki, column…) for independent
   cross-checking, plus DOF with a legacy (RakMK B7) caveat. Link-only, no

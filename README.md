@@ -68,7 +68,6 @@ New to all of this? [docs/00 — What is this?](docs/00-what-is-this.md) explain
 - **Eurocode + Finnish NA calcs (eurocode-fi)** — cited, checkable timber design → [docs/11](docs/11-eurocode-fi.md)
 - **Finnish reference tools (Puuinfo etc.)** — free tools for cross-checking → [docs/12](docs/12-suomalaiset-referenssityokalut.md)
 - **Autodesk Robot Structural Analysis** — *experimental; the Robot MCP is field-tested on Robot 2027, with known gaps* → [docs/10](docs/10-connect-robot-structural.md) (Product Help MCP + COM) and [docs/14](docs/14-robot-mcp.md) (Robot MCP)
-- **LinkedIn MCP** — read your own LinkedIn posts into Claude. *Not related to engineering.* → [docs/13](docs/13-linkedin-mcp.md)
 
 ### All docs
 
@@ -85,7 +84,6 @@ New to all of this? [docs/00 — What is this?](docs/00-what-is-this.md) explain
 [10 Robot Structural Analysis](docs/10-connect-robot-structural.md) ·
 [11 eurocode-fi](docs/11-eurocode-fi.md) ·
 [12 Suomalaiset referenssityökalut](docs/12-suomalaiset-referenssityokalut.md) ·
-[13 LinkedIn MCP](docs/13-linkedin-mcp.md) ·
 [14 Robot MCP](docs/14-robot-mcp.md) ·
 [15 Verify AI results](docs/15-verify-ai-results.md) ·
 [16 Academic integrity](docs/16-academic-integrity.md)
