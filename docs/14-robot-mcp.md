@@ -4,9 +4,11 @@
 Analysis Professional through tools — the same way the MATLAB MCP (docs/04)
 lets it run MATLAB. Windows + installed, licensed Robot required.*
 
-> **Status: experimental.** The MCP handshake (and `rsap_status`) is verified;
-> it is **untested against a real Robot install**. Treat every result as
-> unverified until you have checked it yourself.
+> **Status: experimental, field-tested.** Used end-to-end against **Robot 2027
+> (Education)** on a 2D steel frame: geometry, sections, loads,
+> combinations, linear + nonlinear analysis and result reading all worked.
+> Some things the tools cannot do — see [Field-tested notes](#field-tested-notes).
+> Still check every result yourself.
 
 > 🇫🇮 Suomeksi, lyhyesti: [examples/robot/robot-mcp-kayttoonotto.md](../examples/robot/robot-mcp-kayttoonotto.md)
 
@@ -84,8 +86,8 @@ sanity-check (repo CLAUDE.md rule 3).
 
 - **Third-party, young project** (0 stars at time of review). Re-review the
   diff before bumping the pinned commit.
-- **Untested against a real Robot install** — verified only up to the MCP
-  handshake and `rsap_status` (no Robot on the authoring machine).
+- **Partially tested** — see [Field-tested notes](#field-tested-notes) for what
+  was exercised against a real Robot 2027 install and what is missing.
 - **Write access by default**: tools create/modify/save models. Work on copies
   of real projects.
 - COM is Windows-only and single-threaded; `rsap_calculate` can take a while on
@@ -93,6 +95,48 @@ sanity-check (repo CLAUDE.md rule 3).
 - **Verify results independently** (hand calc, Python, or the eurocode-fi
   Level-2 check in docs/11). The MCP removes API hallucination, not modelling
   errors.
+
+## Field-tested notes
+
+From real use against Robot 2027 (Education) on a 2D frame.
+
+**Worked:** `rsap_connect`, open / Save As / save, nodes, bars, sections from the
+Robot database (`HEA …`, `IPE …`, rectangular hollow sections as `RRHS hxbxt`),
+steel grades from the material database (e.g. `S355`), self-weight, uniform bar loads (incl. `projected=true`), nodal forces,
+combinations, `rsap_calculate`, reactions, bar forces / envelopes, displacements.
+A case created with `analysis="static_nonlinear"` gives geometrically nonlinear
+(second-order) results — verified to differ from the identical linear case.
+
+**The tools cannot:**
+
+| Missing | Workaround |
+|---|---|
+| Buckling analysis (`analysis` accepts only `static_linear`, `static_nonlinear`, `modal`, `comb`) | Create one **simple case per combination containing the factored loads**, check it reproduces the combination's reactions, then the user sets *Analysis → Analysis Types → Change analysis type → Buckling* in the GUI. Robot runs buckling on simple cases, not combinations. |
+| Set or read member releases, rigid links, supports | Do it in the GUI. Don't delete/recreate bars of an existing model (next row). |
+| Delete or edit a load, or edit a combination | Add a **correction load** in the same case (loads superpose), or create a new case/combination. |
+| Move a node | Delete + recreate (loses releases on attached bars). |
+
+**Gotchas:**
+
+- **Deleting and recreating bars silently drops their releases**, and the tools
+  can't put them back. Changes the frame's behaviour without any error. Work on a
+  copy and prefer not to rebuild bars of a model you were given.
+- **Robot connects nodes that lie on a bar** at calculation time. A node that
+  looks "unconnected" in `rsap_list_bars` (not a bar end) may be fine — check
+  force continuity in the results before "fixing" geometry.
+- **`rsap_node_reaction` returns numbers for nodes that are not supports.**
+  Verify that the support reactions sum to the applied load.
+- **Signs follow Robot:** bar `fx` > 0 is compression, < 0 tension. Graders or
+  colleagues using Robot output expect these signs.
+- **If the user closes the project in the GUI**, calls fail with COM error
+  `-2147352567`. Run `rsap_status`; if `project: false`, reopen the file.
+- **Buckling modes in the GUI:** the node-displacement table shows the *static*
+  solution even when a mode is selected. Mode shapes appear only in the diagram
+  (*Results → Diagrams for Bars → Deformation*, then **Normalize**). The global
+  sway mode is the one where both column tops move the same way; local member
+  modes can come first.
+- **Results summary scans** default to 300 nodes/bars — raise the caps on big
+  models.
 
 ## Related
 - docs/10 — Autodesk Product Help MCP (docs) + raw COM scripting

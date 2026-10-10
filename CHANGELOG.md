@@ -3,6 +3,11 @@
 Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
+### Changed
+- **Robot MCP field-tested** on Robot 2027 (Education): docs/14 status updated,
+  new *Field-tested notes* (what works, missing tools + workarounds for
+  buckling / releases / load deletion, gotchas); same rules added to the
+  `robot-structural` skill, README and the Finnish quickstart.
 ### Fixed
 - **Ramberg–Osgood example** mixed two forms (α=0.002 with the σy/E factor),
   giving a plastic strain at σy of 2.5e-6 instead of 0.002. Now uses the 0.2 %

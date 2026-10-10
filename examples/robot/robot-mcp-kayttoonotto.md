@@ -71,8 +71,13 @@ materiaalin, tuet ja kuormat, laskee mallin ja lukee tulokset.
 - **Kyseessä on ulkopuolisen tekijän palvelin**
   ([nhantruong96/rsap-mcp](https://github.com/nhantruong96/rsap-mcp), MIT-lisenssi),
   ei Autodeskin. Se on lukittu tarkistettuun versioon `08ab805`.
-- **Testaamatta.** Ohjetta ei ole vielä kokeiltu koneella, jossa Robot on
-  asennettu. Jos jokin vaihe ei toimi, kirjaa se tähän ohjeeseen.
+- **Kokeiltu Robot 2027:llä.** Mallin rakentaminen, kuormat, yhdistelmät,
+  lineaarinen ja epälineaarinen laskenta sekä tulosten luku toimivat.
+  Nurjahdusanalyysia, sauvojen vapautuksia ja kuormien poistoa ei voi tehdä
+  työkaluilla. Kiertotiet ja sudenkuopat:
+  [docs/14, Field-tested notes](../../docs/14-robot-mcp.md#field-tested-notes).
+- **Älä poista ja luo sauvoja uudelleen annetussa mallissa.** Sauvojen
+  vapautukset katoavat ilman virheilmoitusta, eikä niitä saa työkaluilla takaisin.
 
 ## Vianetsintä
 

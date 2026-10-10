@@ -24,6 +24,21 @@ of generating COM code. They work in **SI base units (m, N, N·m)** — convert 
 label units explicitly when reporting. Fall back to the COM code below only for
 things those tools don't cover.
 
+Field-tested rules for the `rsap_*` tools (details: docs/14, *Field-tested notes*):
+- **Save As a copy first**; never delete/recreate bars of a given model — their
+  releases are lost and the tools can't restore them.
+- Robot connects nodes lying on bars at calculation; check results before
+  "fixing" geometry that only looks disconnected.
+- No buckling, releases, rigid links, load deletion or combination editing via
+  the tools. For buckling, build a simple case with the factored loads and have
+  the user switch its analysis type to Buckling in the GUI. To undo a load, add
+  a correction load in the same case.
+- `analysis="static_nonlinear"` gives second-order results.
+- Verify reactions sum to the applied load; `rsap_node_reaction` also returns
+  values for non-support nodes. Bar `fx` > 0 = compression.
+- COM error `-2147352567` usually means the project was closed — `rsap_status`,
+  then reopen.
+
 ## Rule 0 — verify, don't guess
 
 Robot's API has hundreds of interfaces. Before asserting an object/method/enum
