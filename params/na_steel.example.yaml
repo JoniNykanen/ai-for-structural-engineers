@@ -1,0 +1,44 @@
+# na_steel.example.yaml — TEMPLATE (safe to commit; contains NO standard values)
+# ============================================================================
+# Copy this file to  params/na_steel.yaml  (gitignored) and fill each [FILL]
+# from YOUR licensed copies of the standards. This repo cannot ship these values
+# (they are copyrighted by CEN / SFS). Every field notes WHICH clause/table the
+# value comes from — look it up there.
+#
+# Leave nothing blank: the eurocode-fi tools STOP if a required value is missing,
+# rather than guessing. Units are given per field.
+
+material:
+  grade: S355J2               # steel grade you are designing
+  f_y:        # N/mm^2   yield strength for the flange thickness used — EN 1993-1-1 Table 3.1 / EN 10025-2  [FILL]
+  E:          # N/mm^2   modulus of elasticity          — EN 1993-1-1 §3.2.6  [FILL]
+  G:          # N/mm^2   shear modulus                  — EN 1993-1-1 §3.2.6  [FILL]
+  rho:        # kg/m^3   density (self-weight)          — EN 1991-1-1 Annex A  [FILL]
+
+partial_factors:
+  gamma_M0:   # -        cross-section resistance       — EN 1993-1-1 §6.1 + SFS-NA  [FILL]
+  gamma_M1:   # -        member stability (LTB)         — EN 1993-1-1 §6.1 + SFS-NA  [FILL]
+
+classification:               # rolled I-section, bending about the strong axis
+  flange_ct_class1:   # -   outstand flange c/t limit for class 1, multiplied by epsilon  — EN 1993-1-1 Table 5.2  [FILL]
+  web_ct_class1:      # -   internal web in bending c/t limit for class 1, × epsilon      — EN 1993-1-1 Table 5.2  [FILL]
+
+shear:
+  eta:                # -   shear area factor eta                                         — EN 1993-1-5 §5.1 + SFS-NA  [FILL]
+  hw_tw_limit:        # -   web shear-buckling limit hw/tw ≤ limit·epsilon/eta              — EN 1993-1-1 §6.2.6(6)  [FILL]
+
+ltb:                          # lateral-torsional buckling, EN 1993-1-1 §6.3.2
+  method:             # general (§6.3.2.2) or rolled (§6.3.2.3)                            [FILL]
+  alpha_LT:           # -   imperfection factor for the chosen buckling curve — Table 6.3 + Table 6.4/6.5 + SFS-NA  [FILL]
+  lambda_LT0:         # -   plateau length (general method: see §6.3.2.2)  — §6.3.2.2 / §6.3.2.3 + SFS-NA  [FILL]
+  beta:               # -   (general method: see §6.3.2.2)                 — §6.3.2.2 / §6.3.2.3 + SFS-NA  [FILL]
+
+actions:                      # EN 1990 + SFS-NA (Finnish values incl. K_FI)
+  gamma_G_610a:       # -   permanent, expression 6.10a   — EN 1990 Table A1.2(B) + SFS-NA  [FILL]
+  gamma_G_610b:       # -   permanent, expression 6.10b   — EN 1990 Table A1.2(B) + SFS-NA  [FILL]
+  gamma_Q:            # -   variable                      — EN 1990 Table A1.2(B) + SFS-NA  [FILL]
+  KFI:                # -   consequence-class factor      — SFS-NA EN 1990 A1.3.1  [FILL]
+
+deflection_limits:            # vertical deflection, characteristic combination — SFS-NA EN 1993-1-1 / EN 1990 A1.4.3
+  w_max_ratio:        # -   L / ratio for total deflection (G + Q)          [FILL]
+  w_Q_ratio:          # -   L / ratio for the variable-load part (Q only)  [FILL]
