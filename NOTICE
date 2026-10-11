@@ -1,0 +1,23 @@
+matlab-claude-for-engineers
+Copyright 2026 Joni Nykänen — https://joninykanen.com
+
+This product includes software and documentation developed by Joni Nykänen.
+
+Code (examples, scripts, hooks, setup scripts and Claude skills) is licensed
+under the Apache License, Version 2.0 — see LICENSE.
+Documentation (README.md, CHANGELOG.md and everything under docs/) is licensed
+under Creative Commons Attribution 4.0 International (CC BY 4.0) — see
+LICENSE-docs.
+
+The names "matlab-claude-for-engineers" and "eurocode-fi" and the name
+"Joni Nykänen" are not licensed for use as trademarks (Apache-2.0 §6).
+Forks must not present themselves as the original or as endorsed by the author.
+
+This repository does not contain Eurocode or SFS National Annex text, tables or
+values. Code values are supplied by the user from their own licensed standards
+in params/na_timber.yaml (gitignored). Calculation results are aids only; the
+responsible designer remains accountable for every design.
+
+Third-party tools referenced by the setup scripts (MATLAB MCP Server, rsap-mcp,
+skills listed in skills-lock.json) are not distributed with this repository
+and remain under their own licenses.

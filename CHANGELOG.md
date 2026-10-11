@@ -4,6 +4,14 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Changed
+- **License:** code is now Apache-2.0 (was MIT) and docs are CC BY 4.0
+  (`LICENSE-docs`); a `NOTICE` file adds attribution, the trademark carve-out
+  and the "no Eurocode values" statement.
+- **mahapalkki example reads code values from `params/na_timber.yaml`** via the
+  new `examples/structural/lue_na_parametrit.m`, which uses MATLAB's Python
+  interface and pyyaml from the repo `.venv`. No normative values remain in
+  the script. Results are unchanged (215 × 1710 mm, 76.8 %). The template gains
+  `actions.psi0_wind`, `actions.psi2_wind` and `curved_beam.k_dis`.
 - **Robot MCP field-tested** on Robot 2027 (Education): docs/14 status updated,
   new *Field-tested notes* (what works, missing tools + workarounds for
   buckling / releases / load deletion, gotchas); same rules added to the

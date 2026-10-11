@@ -6,29 +6,36 @@
 %[text] ## 1. Lähtötiedot ja oletukset
 %[text] Kuormat on annettu erillisinä ominaisarvoina. Keskeiset oletukset:
 %[text] - Jänneväli `L = 21 m`, vapaasti tuettu palkki
-%[text] - Materiaali GL30c: `f_m,k = 30`, `f_v,k = 3,5`, `f_t,90,k = 0,5 MPa`, `E_0,mean = 13000 MPa`
-%[text] - Kuormat: pysyvä `G = 3`, lumi `Q1 = 12` (keskipitkä, SFS-EN 1995-1-1 NA 2.3.1.2(2)P), hetkellinen `Q2 = 9 kN/m`
-%[text] - Käyttöluokka 2: `k_def = 0,8`; osavarmuus `gamma_M = 1,25`; seuraamusluokka CC2 `K_FI = 1,0`
-%[text] - Sivutuettu puristusreuna: `k_crit = 1,0` \
+%[text] - Materiaali GL30c, käyttöluokka 2, seuraamusluokka CC2
+%[text] - Kuormat: pysyvä `G = 3`, lumi `Q1 = 12`, tuuli (hetkellinen) `Q2 = 9 kN/m`
+%[text] - Sivutuettu puristusreuna: `k_crit = 1,0`
+%[text] - **Normiarvot** (lujuudet, `gamma`-kertoimet, `k_mod`, `k_def`, `k_cr`, `psi`, taipumaraja, `k_dis`) luetaan tiedostosta `params/na_timber.yaml`, jonka täytät omasta lisensoidusta normistasi (pohja `params/na_timber.example.yaml`). Repoon ei kirjoiteta normiarvoja. \
 L = 21;                       % m, jänneväli
-G = 3; Q1 = 12; Q2 = 9;       % kN/m, ominaiskuormat (pysyvä, lumi, hetkellinen)
-psi0_1 = 0.7; psi2_1 = 0.2;   % lumi (Q1)
-psi0_2 = 0.6; psi2_2 = 0.0;   % hetkellinen (Q2)
-KFI = 1.0;
-fmk = 30; fvk = 3.5; ft90k = 0.5;   % MPa, GL30c
-E0mean = 13000;               % MPa
-gM = 1.25; kdef = 0.8; kcr = 1.0;   % k_cr = 1,0 liimapuulle (NA 6.1.7(2))
-kmod_p = 0.60; kmod_mt = 0.80; kmod_i = 1.10;   % pysyvä / keskipitkä (lumi) / hetkellinen (käyttöluokka 2)
+G = 3; Q1 = 12; Q2 = 9;       % kN/m, ominaiskuormat (pysyvä, lumi, tuuli)
+p = lue_na_parametrit(["material.f_m_k" "material.f_v_k" "material.f_t90_k" "material.E0_mean" ...
+    "partial_factors.gamma_M" "k_def" "k_cr" "k_mod.permanent" "k_mod.instantaneous" ...
+    "actions.gamma_G_610a" "actions.gamma_G_610b" "actions.gamma_Q" "actions.KFI" ...
+    "actions.psi0_snow" "actions.psi2_snow" "actions.psi0_wind" "actions.psi2_wind" ...
+    "actions.snow_duration" "deflection_limits.w_net_fin_ratio" "curved_beam.k_dis"]);
+fmk = p.material.f_m_k; fvk = p.material.f_v_k; ft90k = p.material.f_t90_k;   % MPa
+E0mean = p.material.E0_mean;                                                  % MPa
+gM = p.partial_factors.gamma_M; kdef = p.k_def; kcr = p.k_cr;
+gGa = p.actions.gamma_G_610a; gGb = p.actions.gamma_G_610b; gQ = p.actions.gamma_Q; KFI = p.actions.KFI;
+psi0_1 = p.actions.psi0_snow; psi2_1 = p.actions.psi2_snow;   % lumi (Q1)
+psi0_2 = p.actions.psi0_wind; psi2_2 = p.actions.psi2_wind;   % tuuli (Q2)
+kmod_p = p.k_mod.permanent; kmod_i = p.k_mod.instantaneous;
+kmod_s = p.k_mod.(p.actions.snow_duration);                   % lumen aikaluokka parametritiedostosta
+w_ratio = p.deflection_limits.w_net_fin_ratio;                % taipumaraja L/w_ratio
 %%
 %[text] ## 2. Kuormayhdistelmät (EN 1990, 6.10a/6.10b)
 %[text] Ratkaisevaa ei ole suurin kuorma vaan suurin suhde `q_d / k_mod`, koska lyhin aikaluokka yhdistelmässä määrää `k_mod`-kertoimen. Lasketaan kaikki yhdistelmät ja valitaan määräävä.
-qd_all = [ 1.35*KFI*G ; ...
-           1.15*KFI*G + 1.5*KFI*Q1 ; ...
-           1.15*KFI*G + 1.5*KFI*Q1 + 1.5*KFI*psi0_2*Q2 ; ...
-           1.15*KFI*G + 1.5*KFI*Q2 + 1.5*KFI*psi0_1*Q1 ; ...
-           1.15*KFI*G + 1.5*KFI*Q2 ];
-kmod_all = [kmod_p ; kmod_mt ; kmod_i ; kmod_i ; kmod_i];
-names = ["1.35G";"1.15G+1.5S";"1.15G+1.5S+0.9W";"1.15G+1.5W+1.05S";"1.15G+1.5W"];
+qd_all = [ gGa*KFI*G ; ...
+           gGb*KFI*G + gQ*KFI*Q1 ; ...
+           gGb*KFI*G + gQ*KFI*Q1 + gQ*KFI*psi0_2*Q2 ; ...
+           gGb*KFI*G + gQ*KFI*Q2 + gQ*KFI*psi0_1*Q1 ; ...
+           gGb*KFI*G + gQ*KFI*Q2 ];
+kmod_all = [kmod_p ; kmod_s ; kmod_i ; kmod_i ; kmod_i];
+names = ["6.10a: G";"6.10b: G+S";"6.10b: G+S+psi0*W";"6.10b: G+W+psi0*S";"6.10b: G+W"];
 ratio = qd_all ./ kmod_all;
 [~, ig] = max(ratio);
 qd = qd_all(ig); kmod_g = kmod_all(ig);
@@ -71,7 +78,7 @@ xlabel('x (m)'); ylabel('V (kN)'); grid on %[output:85283c86]
 %[text] **Käyttöastepolitiikka** (suunnittelijan oma valinta, tiukempi kuin normi): suurimman käyttöasteen on oltava **alle 90 %**, ja tavoitealue on **70–80 %**. Siksi etsitään pienin standardikorkeus (lamelli 45 mm) kolmelle leveydelle, jolla taivutuksen, leikkauksen ja taipuman suurin käyttöaste on enintään 80 %. Mitoituslujuudet `f_m,d = k_mod*f_m,k/gamma_M` ja `f_v,d = k_mod*f_v,k/gamma_M`. Leikkauksessa tehollinen leveys `k_cr*b`.
 q_char = G + Q1 + psi0_2*Q2;  % SLS ominaisyhdistelmä (hetkellinen taipuma)
 q_fin  = G*(1+kdef) + Q1*(1+psi2_1*kdef) + Q2*(psi0_2+psi2_2*kdef);  % lopputaipuma virumalla
-wlim = L*1000/300;            % mm, taipumaraja L/300
+wlim = L*1000/w_ratio;        % mm, taipumaraja L/w_ratio (parametritiedostosta)
 u_max = 0.90;                 % ehdoton raja: suurin käyttöaste < 90 %
 u_target = [0.70 0.80];       % tavoitealue
 b_list = [190 215 240]; t = 45;
@@ -110,11 +117,11 @@ title(sprintf('Käyttöasteet: %d x %d mm', b_sel, h_sel)) %[output:823d6dec]
 ylabel('käyttöaste (%)'); grid on %[output:823d6dec]
 %%
 %[text] ## 5. Taipuma (SLS)
-%[text] Lopputaipuma virumalla (EN 1995-1-1, kaava 6.11): `w_fin = w_G(1+k_def) + w_Q1(1+psi2,1*k_def) + w_Q2(psi0,2+psi2,2*k_def)`. Raja `w_net,fin <= L/300`. Mahapalkin esikorotus (kaareva muoto) vähentää nettotaipumaa entisestään.
+%[text] Lopputaipuma virumalla (EN 1995-1-1, kaava 6.11): `w_fin = w_G(1+k_def) + w_Q1(1+psi2,1*k_def) + w_Q2(psi0,2+psi2,2*k_def)`. Raja `w_net,fin <= L/w_ratio` (parametritiedostosta). Mahapalkin esikorotus (kaareva muoto) vähentää nettotaipumaa entisestään.
 xw = linspace(0, L, 200) * 1000;    % mm
 wcurve = q_fin .* xw .* ((L*1000)^3 - 2*(L*1000).*xw.^2 + xw.^3) / (24*E0mean*I_sel);   % mm
 plot(xw/1000, wcurve, 'LineWidth', 1.5) %[output:911cf97a]
-yline(wlim, '--r', 'L/300') %[output:911cf97a]
+yline(wlim, '--r', sprintf('L/%g', w_ratio)) %[output:911cf97a]
 set(gca, 'YDir', 'reverse') %[output:911cf97a]
 title(sprintf('Lopputaipuma w_{fin}(x), %d x %d mm', b_sel, h_sel)) %[output:911cf97a]
 xlabel('x (m)'); ylabel('taipuma (mm, alaspäin)'); grid on %[output:911cf97a]
@@ -122,16 +129,18 @@ xlabel('x (m)'); ylabel('taipuma (mm, alaspäin)'); grid on %[output:911cf97a]
 %[text] ## 6. Kaarevan palkin säteittäinen vetojännitys
 %[text] Vakiokorkeudella harjan taivutuksen suurennuskerroin $ k\_l=1 $, mutta poikkisyin (kohtisuoraan syitä vastaan) syntyy vetoa. Vaatimus:
 %[text]{"align":"center"} $ \\sigma\_{t,90,d}=\\frac{1.5\\,M\_{ap}}{b\\,h\\,r}\\le k\_{dis}\\,k\_{vol}\\,f\_{t,90,d} $
-%[text] Koska `f_t,90,k = 0,5 MPa` on hyvin pieni, tästä saadaan vaatimus kaaren minimisäteelle harjalla ($ k\_{dis}=1{,}4 $, arvio $ k\_{vol}=0{,}55 $).
+%[text] Koska poikittainen vetolujuus `f_t,90,k` on hyvin pieni, tästä saadaan vaatimus kaaren minimisäteelle harjalla (`k_dis` parametritiedostosta, arvio $ k\_{vol}=0{,}55 $).
 Map = MEd*1e6;                % Nmm (harjamomentti = kentän maksimi)
 ft90d = kmod_g*ft90k/gM;
-kdis = 1.4; kvol = 0.55;
+kdis = p.curved_beam.k_dis;   % parametritiedostosta (EN 1995-1-1 §6.4.3)
+kvol = 0.55;                  % arvio tilavuuskertoimelle (V0/V)^0,2 — tarkenna palkin tilavuudella
 r_min = 1.5*Map/(b_sel*h_sel*kdis*kvol*ft90d) / 1000;   % m
 radial = table(round(ft90d,3), round(kdis*kvol*ft90d,3), round(r_min,1), ... %[output:group:6fb23a28] %[output:09536993]
     'VariableNames', {'ft90d_MPa','sallittu_MPa','r_min_m'}) %[output:group:6fb23a28] %[output:09536993]
 %%
 %[text] ## 7. Yhteenveto
-%[text] - Määräävä yhdistelmä: lumi + tuuli (hetkellinen), `q_d = 29,55 kN/m`, `k_mod = 1,10` — niukasti ennen pelkkää lunta (keskipitkä, `q_d/k_mod` 26,9 vs 26,8)
+%[text] - Tulokset alla on laskettu repon DUMMY-testiarvoilla (`params/na_timber.yaml`). Omilla normiarvoillasi luvut voivat muuttua.
+%[text] - Määräävä yhdistelmä: lumi + tuuli (hetkellinen), `q_d = 29,55 kN/m` — niukasti ennen pelkkää lunta (keskipitkä, `q_d/k_mod` 26,9 vs 26,8)
 %[text] - `M_Ed = 1629 kNm`, `V_Ed = 310 kN`
 %[text] - **Valittu poikkileikkaus: b × h = 215 × 1710 mm** (38 lamellia)
 %[text] - Suurin käyttöaste **76,8 % (taipuma)**, eli tavoitealueella 70–80 % ja alle 90 %:n rajan. Taivutus 58,9 %, leikkaus 41,1 %. Mahapalkin esikorotus keventää taipumaa entisestään.

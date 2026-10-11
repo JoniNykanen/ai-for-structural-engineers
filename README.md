@@ -128,4 +128,9 @@ AI can be confidently wrong. This repo is built around a rule: **Claude shows it
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Use it, fork it, share the kit with your class. Your own `solved/` session data is a different matter: it stays private. If your fork is public, keep auto-push off and don't commit `solved/` (see [docs/09](docs/09-how-this-repo-learns.md)).
+- **Code** (examples, scripts, hooks, setup scripts, Claude skills): [Apache License 2.0](LICENSE)
+- **Documentation** (README, CHANGELOG, `docs/`): [CC BY 4.0](LICENSE-docs). Reuse and adapt it freely, including commercially, as long as you credit *Joni Nykänen — matlab-claude-for-engineers*.
+
+Keep the [NOTICE](NOTICE) file in forks. The project names are not licensed as trademarks. No Eurocode or SFS values ship with this repo: you supply them in `params/na_timber.yaml`.
+
+Use it, fork it, share the kit with your class. Your own `solved/` session data is a different matter: it stays private. If your fork is public, keep auto-push off and don't commit `solved/` (see [docs/09](docs/09-how-this-repo-learns.md)).

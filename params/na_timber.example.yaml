@@ -42,6 +42,8 @@ actions:
   KFI:        # -   consequence-class factor   — EN 1990 + SFS-NA        [FILL]
   psi0_snow:  # -   combination factor, snow    — EN 1990 Table A1.1 + SFS-NA  [FILL]
   psi2_snow:  # -   quasi-permanent, snow       — EN 1990 + SFS-NA        [FILL]
+  psi0_wind:  # -   combination factor, wind    — EN 1990 Table A1.1 + SFS-NA  [FILL, used by the MATLAB mahapalkki example]
+  psi2_wind:  # -   quasi-permanent, wind       — EN 1990 + SFS-NA        [FILL, used by the MATLAB mahapalkki example]
   snow_duration:  # load-duration class of snow: long_term OR medium_term (selects k_mod above)
                   #   — EN 1995-1-1 Table 2.2 + SFS-NA  [FILL]
 
@@ -49,3 +51,7 @@ actions:
 deflection_limits:
   w_inst_ratio:     # e.g. 300 means L/300   [FILL]
   w_net_fin_ratio:  # e.g. 250 means L/250   [FILL]
+
+# Curved and pitched beams — EN 1995-1-1 §6.4.3 (used by the MATLAB mahapalkki example)
+curved_beam:
+  k_dis:      # -   stress-distribution factor, curved beam — EN 1995-1-1 §6.4.3  [FILL]
