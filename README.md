@@ -68,6 +68,7 @@ New to all of this? [docs/00 — What is this?](docs/00-what-is-this.md) explain
 - **Eurocode + Finnish NA calcs (eurocode-fi)** — cited, checkable timber design → [docs/11](docs/11-eurocode-fi.md)
 - **Finnish reference tools (Puuinfo etc.)** — free tools for cross-checking → [docs/12](docs/12-suomalaiset-referenssityokalut.md)
 - **Autodesk Robot Structural Analysis** — *experimental; the Robot MCP is field-tested on Robot 2027, with known gaps* → [docs/10](docs/10-connect-robot-structural.md) (Product Help MCP + COM) and [docs/14](docs/14-robot-mcp.md) (Robot MCP)
+- **Autodesk Revit (official Revit MCP)** — *experimental; read path field-tested on Revit 2027.3*: query a BIM model and check its beams in Python → [docs/17](docs/17-revit-mcp.md)
 
 ### All docs
 
@@ -86,7 +87,8 @@ New to all of this? [docs/00 — What is this?](docs/00-what-is-this.md) explain
 [12 Suomalaiset referenssityökalut](docs/12-suomalaiset-referenssityokalut.md) ·
 [14 Robot MCP](docs/14-robot-mcp.md) ·
 [15 Verify AI results](docs/15-verify-ai-results.md) ·
-[16 Academic integrity](docs/16-academic-integrity.md)
+[16 Academic integrity](docs/16-academic-integrity.md) ·
+[17 Revit MCP](docs/17-revit-mcp.md)
 
 ---
 

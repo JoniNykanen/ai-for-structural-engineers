@@ -3,11 +3,19 @@
     "robot": {
       "type": "stdio",
       "command": "tools/rsap-mcp/.venv/Scripts/python.exe",
-      "args": ["-m", "rsap_mcp"],
+      "args": [
+        "-m",
+        "rsap_mcp"
+      ],
       "env": {
         "RSAP_VISIBLE": "true",
         "RSAP_INTERACTIVE": "true"
       }
+    },
+    "revit": {
+      "type": "stdio",
+      "command": "C:\\Program Files\\Autodesk\\Revit 2027 MCP Server Write-Tools Technical Preview\\Autodesk.RevitMcpServer.Stdio.exe",
+      "args": []
     }
   }
 }
