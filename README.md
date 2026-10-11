@@ -97,6 +97,7 @@ Ready-to-run code in [`examples/`](examples/):
 - **von Mises yield check** — [Python](examples/plasticity/von_mises_yield_check.py) · [MATLAB](examples/plasticity/von_mises_yield_check.m)
 - **Ramberg–Osgood stress–strain curve** — [Python](examples/plasticity/stress_strain_ramberg_osgood.py)
 - **Plastic hinge / collapse load of a beam** — [MATLAB](examples/plasticity/plastic_hinge_beam.m)
+- **Two-span continuous beam (FE analysis, no license needed)** — [PyNite](examples/frame/continuous_beam_pynite.py)
 - **Symbolic derivation of the von Mises function** — [SymPy](examples/sympy/symbolic_yield_derivation.py)
 - **Calling MATLAB from Python** — [Engine API demo](examples/engine_api/call_matlab_from_python.py)
 
