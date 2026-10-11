@@ -1,8 +1,8 @@
-# AI for Structural Engineers — Claude Code for Eurocode, Revit, Robot and Python calculations
+# AI for Structural Engineers — Claude Code for Eurocode, Tekla, Revit, Robot and Python calculations
 
 **Verified structural engineering calculations with an AI that actually runs the numbers — for structural engineers and engineering students.**
 
-Claude Code is an AI assistant that runs in your terminal. It can read files, write code and **run real calculations**. This repo points it at structural engineering work: **Eurocode design in Python** (with the Finnish National Annex), **free frame analysis with PyNite**, **reading Revit models** and **driving Robot Structural Analysis** through MCP servers, and **plasticity / mechanics of materials** for students. MATLAB is supported but optional.
+Claude Code is an AI assistant that runs in your terminal. It can read files, write code and **run real calculations**. This repo points it at structural engineering work: **Eurocode design in Python** (with the Finnish National Annex), **free frame analysis with PyNite**, **reading and editing Tekla Structures models**, **reading Revit models** and **driving Robot Structural Analysis** through MCP servers, and **plasticity / mechanics of materials** for students. MATLAB is supported but optional.
 
 Every example shows its working and **checks its own result** — against a closed-form solution, a second method or the model's own geometry. AI can be confidently wrong; this kit is built so you can see when it is.
 
@@ -14,8 +14,9 @@ You do **not** need to be a programmer. If you can copy-paste a command, you can
 
 | Task | How | Licence needed? | Guide |
 |---|---|---|---|
-| **Eurocode calculations in Python** (EN 1995 timber, Finnish NA) | `eurocode-fi` skill + worked examples | ❌ No | [docs/11](docs/11-eurocode-fi.md) |
+| **Eurocode calculations in Python** (EN 1995 timber, EN 1993 steel, Finnish NA) | `eurocode-fi` skill + worked examples | ❌ No | [docs/11](docs/11-eurocode-fi.md) |
 | **Free structural analysis in Python** (beams, frames, FEM) | PyNite | ❌ No | [examples/frame](examples/frame/README.md) |
+| **Read a Tekla model and check a steel beam to EC3** | Community Tekla MCP + Python | Tekla Structures | [docs/18](docs/18-tekla-mcp.md) |
 | **Read and check a Revit model with AI** | Autodesk Revit MCP + Python | Revit 2027 | [docs/17](docs/17-revit-mcp.md) |
 | **Drive Robot Structural Analysis with AI** | Robot MCP | Robot | [docs/14](docs/14-robot-mcp.md) |
 | **Plasticity and mechanics of materials** (von Mises, Tresca, plastic hinges) | Python / SymPy | ❌ No | [docs/05](docs/05-python-sympy-fallback.md) |
@@ -96,6 +97,12 @@ Full guide: [docs/11 — Eurocode + Finnish NA](docs/11-eurocode-fi.md).
 
 - Two-span continuous beam: reactions, bending moment and shear diagrams, deflection, self-checked against the closed-form solution → [`examples/frame`](examples/frame/README.md)
 
+## Tekla Structures with AI (Tekla MCP)
+
+A community MCP server ([teknovizier/tekla_mcp_server](https://github.com/teknovizier/tekla_mcp_server), GPLv3, installed outside this repo) lets Claude query and edit an open Tekla model. `examples/eurocode/steel/` reads a beam from Tekla and checks it to EN 1993-1-1 (bending, shear, lateral-torsional buckling, deflection) with built-in cross-checks.
+
+Field-tested on Tekla Structures 2026 (Finland environment): IPE300 failed on LTB at 91 %, the profile was changed to IPE330 in Tekla and passed at 68 %. Setup, start order and gotchas → [docs/18 — Tekla MCP](docs/18-tekla-mcp.md).
+
 ## Revit MCP setup (Revit 2027)
 
 Autodesk's official **Revit Public MCP Server** lets Claude query an open Revit model — find structural framing, read lengths and section properties — and hand them to Python.
@@ -154,7 +161,8 @@ Each example runs at least one independent check and says whether it passed: a c
 [14 Robot MCP](docs/14-robot-mcp.md) ·
 [15 Verify AI results](docs/15-verify-ai-results.md) ·
 [16 Academic integrity](docs/16-academic-integrity.md) ·
-[17 Revit MCP](docs/17-revit-mcp.md)
+[17 Revit MCP](docs/17-revit-mcp.md) ·
+[18 Tekla MCP](docs/18-tekla-mcp.md)
 
 ## Skills and plugins
 

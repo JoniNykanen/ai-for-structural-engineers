@@ -4,6 +4,13 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Added
+- **Tekla Structures + EC3 steel** (`docs/18`, `examples/eurocode/steel/`):
+  `export_tekla_beam.py` reads a beam from an open Tekla model (Open API via
+  pythonnet); `steel_beam_ec3.py` checks it to EN 1993-1-1 (class, bending,
+  shear, LTB, deflection) with cross-checks vs Tekla's catalog, numerical
+  integration and Rayleigh–Ritz M_cr. Values from `params/na_steel.yaml`
+  (template `params/na_steel.example.yaml`). Uses the community
+  teknovizier/tekla_mcp_server (GPLv3), installed outside the repo.
 - **PyNite FE example** `examples/frame/continuous_beam_pynite.py`: two-span
   continuous beam (reactions, M, V, deflection, diagrams) with a self-check
   against the closed form; tests in `tests/test_continuous_beam_pynite.py`.
