@@ -1,0 +1,39 @@
+{
+  "source": "Tekla Structures Open API",
+  "model": "New model 2.db1",
+  "guid": "0897c09f-2975-4e37-a088-da9b28337da6",
+  "name": "BEAM",
+  "profile": "IPE300",
+  "material": "S355J2",
+  "start_point_mm": [
+    0.0,
+    0.0,
+    3600.0
+  ],
+  "end_point_mm": [
+    7200.0,
+    0.0,
+    3600.0
+  ],
+  "length_mm": 7200.0,
+  "geometry_mm": {
+    "HEIGHT": 300.0,
+    "WIDTH": 150.0,
+    "WEB_THICKNESS": 7.1,
+    "FLANGE_THICKNESS": 10.7,
+    "ROUNDING_RADIUS_1": 15.0,
+    "ROUNDING_RADIUS_2": 0.0,
+    "FLANGE_SLOPE_RATIO": 0.0
+  },
+  "catalog_properties": {
+    "COVER_AREA": 1159000.039,
+    "CROSS_SECTION_AREA": 5380.0,
+    "MOMENT_OF_INERTIA_X": 83600000.0,
+    "MOMENT_OF_INERTIA_Y": 6040000.0,
+    "RADIUS_OF_GYRATION_X": 125.0,
+    "RADIUS_OF_GYRATION_Y": 33.49999905,
+    "SECTION_MODULUS_X": 557000.0,
+    "SECTION_MODULUS_Y": 80500.0,
+    "WEIGHT_PER_UNIT_LENGTH": 42.2
+  }
+}

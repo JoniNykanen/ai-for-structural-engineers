@@ -1,4 +1,4 @@
-# setup.ps1 - one-command setup for MATLAB + Claude for Engineers (Windows)
+# setup.ps1 - one-command setup for AI for Structural Engineers (Windows)
 #
 # Run from the repo root in PowerShell:
 #     ./setup.ps1
@@ -7,6 +7,7 @@
 # MATLAB license is present) the official MATLAB MCP Server, skills, and plugins.
 # Pass -EnableAutoPush to also auto-commit/push captured sessions.
 # Robot Structural Analysis MCP is installed when Robot is detected (or -WithRobot).
+# The Revit MCP add-on (Autodesk, installed separately) is detected and registered.
 #
 # Fails closed: every external command is checked. Anything that fails is
 # reported with a fix hint and listed in the summary at the end (exit code 1).
@@ -65,11 +66,11 @@ function Invoke-Native([scriptblock]$Command) {
     return ($code -eq 0)
 }
 
-Write-Host "== MATLAB + Claude for Engineers - setup ==" -ForegroundColor Cyan
+Write-Host "== AI for Structural Engineers - setup ==" -ForegroundColor Cyan
 Write-Host "Repo: $repo`n"
 
 # --- 1. Python virtual environment + calculation libraries ------------------
-Write-Host "[1/7] Python environment..." -ForegroundColor Yellow
+Write-Host "[1/8] Python environment..." -ForegroundColor Yellow
 $venvPy = "$repo\.venv\Scripts\python.exe"
 $py = $null
 foreach ($cand in @("python", "py")) {
@@ -99,7 +100,7 @@ if (-not $py) {
 }
 
 # --- 2. Detect MATLAB -------------------------------------------------------
-Write-Host "[2/7] Detecting MATLAB..." -ForegroundColor Yellow
+Write-Host "[2/8] Detecting MATLAB..." -ForegroundColor Yellow
 $matlabBase = "C:\Program Files\MATLAB"
 $matlabRoot = $null
 $release = $null
@@ -116,7 +117,7 @@ if ($matlabRoot) {
 
 # --- 3. MATLAB Engine API (matched to the release) --------------------------
 if ($matlabRoot) {
-    Write-Host "[3/7] MATLAB Engine API..." -ForegroundColor Yellow
+    Write-Host "[3/8] MATLAB Engine API..." -ForegroundColor Yellow
     if (-not $pythonOk) {
         Write-Skip "MATLAB Engine API" "Skipped: the Python environment failed (step 1)."
     } elseif ($release -match "R(\d{4})([ab])") {
@@ -137,7 +138,7 @@ if ($matlabRoot) {
 # --- 4. Official MATLAB MCP Server + registration ---------------------------
 $mcpRegistered = $false
 if ($matlabRoot) {
-    Write-Host "[4/7] MATLAB MCP Server ($mcpVersion)..." -ForegroundColor Yellow
+    Write-Host "[4/8] MATLAB MCP Server ($mcpVersion)..." -ForegroundColor Yellow
     $mcpDir = "$HOME\matlab-mcp-server"
     $mcpName = "matlab-mcp-server-windows-x64.exe"
     $mcpBin = "$mcpDir\$mcpName"
@@ -188,7 +189,7 @@ if ($matlabRoot) {
 }
 
 # --- 5. Skills + plugins ----------------------------------------------------
-Write-Host "[5/7] Skills and plugins..." -ForegroundColor Yellow
+Write-Host "[5/8] Skills and plugins..." -ForegroundColor Yellow
 if (Get-Command claude -ErrorAction SilentlyContinue) {
     $prev = $ErrorActionPreference; $ErrorActionPreference = "Continue"
     $markets = (claude plugin marketplace list 2>&1 | Out-String)
@@ -226,7 +227,7 @@ if (Get-Command npx -ErrorAction SilentlyContinue) {
 }
 
 # --- 6. Robot Structural Analysis MCP (rsap-mcp, pinned) --------------------
-Write-Host "[6/7] Robot Structural Analysis MCP..." -ForegroundColor Yellow
+Write-Host "[6/8] Robot Structural Analysis MCP..." -ForegroundColor Yellow
 $robotFound = Test-Path "Registry::HKEY_CLASSES_ROOT\Robot.Application"
 if ($robotFound -or $WithRobot) {
     # Third-party MIT server, pinned to a reviewed commit (see docs/14).
@@ -269,8 +270,32 @@ if ($robotFound -or $WithRobot) {
     Write-Skip "Robot MCP" "Robot not detected - skipping. Re-run with -WithRobot to force."
 }
 
-# --- 7. Auto-push opt-in ----------------------------------------------------
-Write-Host "[7/7] Learning-loop auto-push..." -ForegroundColor Yellow
+# --- 7. Revit MCP (Autodesk add-on, installed separately) ---------------------
+Write-Host "[7/8] Revit MCP..." -ForegroundColor Yellow
+$revitExe = $null
+$revitDirs = @(Get-ChildItem "$env:ProgramFiles\Autodesk" -Directory -Filter "Revit 20* MCP Server*" -ErrorAction SilentlyContinue |
+    Sort-Object @{ Expression = { $_.Name -match "Write-Tools" }; Descending = $true }, Name -Descending)
+foreach ($d in $revitDirs) {
+    $exe = Join-Path $d.FullName "Autodesk.RevitMcpServer.Stdio.exe"
+    if (Test-Path $exe) { $revitExe = $exe; break }
+}
+if (-not $revitExe) {
+    Write-Skip "Revit MCP" "Revit MCP add-on not found - skipping. To use Revit, install it from Autodesk Account (docs/17)."
+} elseif ($revitExe -like "*Revit 2027 MCP Server Write-Tools Technical Preview*") {
+    Write-Ok "Revit MCP" "Found $(Split-Path (Split-Path $revitExe) -Leaf); registered via the repo's .mcp.json (server 'revit')."
+} elseif (Get-Command claude -ErrorAction SilentlyContinue) {
+    # A different edition/path than .mcp.json: a local-scope entry overrides the project one.
+    if (Invoke-Native { claude mcp add --scope local revit -- "$revitExe" }) {
+        Write-Ok "Revit MCP" "Found $(Split-Path (Split-Path $revitExe) -Leaf); registered for this machine (local scope, overrides .mcp.json)."
+    } else {
+        Write-Fail "Revit MCP" "'claude mcp add' failed" "Run by hand: claude mcp add --scope local revit -- `"$revitExe`""
+    }
+} else {
+    Write-Fail "Revit MCP" "Claude Code CLI not found" "Install Claude Code (docs/01), then re-run ./setup.ps1"
+}
+
+# --- 8. Auto-push opt-in ----------------------------------------------------
+Write-Host "[8/8] Learning-loop auto-push..." -ForegroundColor Yellow
 $marker = "$repo\.claude\autopush.enabled"
 if ($EnableAutoPush) {
     New-Item -ItemType Directory -Force -Path "$repo\.claude" | Out-Null

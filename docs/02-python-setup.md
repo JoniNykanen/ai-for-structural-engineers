@@ -22,7 +22,7 @@ Otherwise:
 
 ## Step 2 — Create a virtual environment (keeps things tidy)
 
-From inside the `matlab-claude-for-engineers` folder:
+From inside the `ai-for-structural-engineers` folder:
 
 **Windows (PowerShell):**
 ```powershell

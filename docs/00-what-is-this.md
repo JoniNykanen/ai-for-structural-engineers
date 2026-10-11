@@ -1,4 +1,4 @@
-# 00 — What is this? (read me first)
+# 00 — What is this? AI for structural engineers and engineering students (read me first)
 
 *Written for someone who has never used an AI coding tool. 5-minute read.*
 

@@ -1,4 +1,4 @@
-# 14 — Robot Structural Analysis MCP (drive Robot like MATLAB)
+# 14 — Robot Structural Analysis MCP for Claude Code (drive Robot with AI)
 
 *Lets Claude **build, analyse and read results** from Autodesk Robot Structural
 Analysis Professional through tools — the same way the MATLAB MCP (docs/04)
