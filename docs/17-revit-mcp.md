@@ -1,4 +1,4 @@
-# 17 — Revit MCP (read a BIM model, check it in Python)
+# 17 — Revit MCP with Claude Code: read a BIM model, check it in Python
 
 *Lets Claude **query a live Revit model** — find structural members, read their
 lengths and section properties — and hand them to the repo's own calculation
@@ -42,11 +42,12 @@ Write and Experimental need Revit **2027.2 or later**.
    was already open when you installed the add-on is invisible to the server
    (`get_running_revit_instances` returns `[]`). If Revit asks about the
    add-in, choose *Always Load*.
-3. **Register it in Claude Code.** This repo's `.mcp.json` already has a
-   `revit` entry pointing at the Write-Tools path:
-   `C:\Program Files\Autodesk\Revit 2027 MCP Server Write-Tools Technical Preview\Autodesk.RevitMcpServer.Stdio.exe`.
-   For Read-Tools, change `Write-Tools` to `Read-Tools` in that path. (Elsewhere:
-   `claude mcp add revit -- "<path to Autodesk.RevitMcpServer.Stdio.exe>"`.)
+3. **Register it in Claude Code: run `./setup.ps1`.** It finds the edition you
+   installed. This repo's `.mcp.json` already has a `revit` entry for the
+   Write-Tools path
+   (`C:\Program Files\Autodesk\Revit 2027 MCP Server Write-Tools Technical Preview\Autodesk.RevitMcpServer.Stdio.exe`);
+   for any other edition the script adds a local-scope `revit` entry that
+   overrides it. By hand: `claude mcp add --scope local revit -- "<path to Autodesk.RevitMcpServer.Stdio.exe>"`.
    Autodesk's setup instructions cover Claude Desktop and Cursor, not Claude Code.
 4. **Restart Claude Code** in this folder and approve the `revit` server.
 5. In Revit: **open a model, close all dialogs, stay in *Modify***. The server

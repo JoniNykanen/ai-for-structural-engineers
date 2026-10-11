@@ -7,7 +7,7 @@ description: >-
   hallucinate API names. Windows + licensed Robot only.
 metadata:
   type: reference
-  author: matlab-claude-for-engineers
+  author: ai-for-structural-engineers
   version: "1.0"
 ---
 

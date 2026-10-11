@@ -59,8 +59,8 @@ To exit a session, type `/exit` or press `Ctrl+C` twice.
 ## Step 5 — Get this repo onto your computer
 
 ```bash
-git clone https://github.com/JoniNykanen/matlab-claude-for-engineers.git
-cd matlab-claude-for-engineers
+git clone https://github.com/JoniNykanen/ai-for-structural-engineers.git
+cd ai-for-structural-engineers
 claude
 ```
 Starting `claude` from *inside* this folder means it automatically reads the
@@ -77,7 +77,7 @@ either:
 1. Open VS Code → **Extensions** (`Ctrl+Shift+X`) → search **"Claude Code"**
    (publisher **Anthropic**) → **Install**. Direct link:
    [Claude Code for VS Code (Marketplace)](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code).
-2. **File → Open Folder…** and open the cloned `matlab-claude-for-engineers`
+2. **File → Open Folder…** and open the cloned `ai-for-structural-engineers`
    folder. Opening it as the workspace is what makes Claude load this repo's
    [`CLAUDE.md`](../CLAUDE.md), MCP servers, skills, and hooks.
 3. Open the Claude Code panel (click the Claude icon in the sidebar, or

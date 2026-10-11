@@ -1,4 +1,4 @@
-# Frame / beam FE analysis examples (PyNite)
+# Beam and frame analysis in Python (PyNite FEM examples)
 
 Structural analysis of beams and frames with **PyNite** — a free, MIT-licensed
 3D frame finite element library. **No MATLAB or Robot license needed.**
