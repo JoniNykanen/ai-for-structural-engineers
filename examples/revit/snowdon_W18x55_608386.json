@@ -1,0 +1,18 @@
+{
+  "_comment": "Values read with the Revit MCP (get_element_data) on 2026-10-11. Raw Revit internal units: feet. Type parameters come from the element's typeId.",
+  "source": "Snowdon Towers Sample Structural (Revit 2027.3 sample model)",
+  "element_id": 608386,
+  "type_id": 616876,
+  "type_name": "W18x55",
+  "section_name_key": "W12X26",
+  "structural_usage": "Girder",
+  "system_length_ft": 17.33333333333,
+  "height_ft": 1.508333333333,
+  "width_ft": 0.6275,
+  "flange_thickness_ft": 0.0525,
+  "web_thickness_ft": 0.0325,
+  "section_area_ft2": 0.1125,
+  "Ix_strong_ft4": 0.009837962962963,
+  "Iy_weak_ft4": 0.0008342978395062,
+  "J_ft4": 1.446759259259e-05
+}

@@ -9,6 +9,14 @@ Notable changes to this repo. Keep entries short; newest on top.
   against the closed form; tests in `tests/test_continuous_beam_pynite.py`.
   `PyNiteFEA` (MIT) added to `requirements.txt`. First frame-analysis path
   that needs neither MATLAB nor Robot.
+- **Revit MCP** (`docs/17`): `.mcp.json` registers Autodesk's official Revit
+  Public MCP Server (Write-Tools, Technical Preview) as `revit`. Read path
+  field-tested on Revit 2027.3 with the Snowdon Towers structural sample; write
+  tools not tested. New `examples/revit/check_revit_beam.py` checks a beam's
+  Revit section data against its plate geometry and runs it in PyNite — it
+  caught the sample's "W18x55" type carrying W12X26 stiffness (Ix 4.3× low).
+  Finnish quickstart `examples/revit/revit-mcp-kayttoonotto.md`; tests in
+  `tests/test_check_revit_beam.py`.
 ### Changed
 - **License:** code is now Apache-2.0 (was MIT) and docs are CC BY 4.0
   (`LICENSE-docs`); a `NOTICE` file adds attribution, the trademark carve-out
