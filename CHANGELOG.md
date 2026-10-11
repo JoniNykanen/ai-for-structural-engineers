@@ -3,6 +3,12 @@
 Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
+### Added
+- **PyNite FE example** `examples/frame/continuous_beam_pynite.py`: two-span
+  continuous beam (reactions, M, V, deflection, diagrams) with a self-check
+  against the closed form; tests in `tests/test_continuous_beam_pynite.py`.
+  `PyNiteFEA` (MIT) added to `requirements.txt`. First frame-analysis path
+  that needs neither MATLAB nor Robot.
 ### Changed
 - **License:** code is now Apache-2.0 (was MIT) and docs are CC BY 4.0
   (`LICENSE-docs`); a `NOTICE` file adds attribution, the trademark carve-out
