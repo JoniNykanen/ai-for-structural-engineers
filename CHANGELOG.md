@@ -3,6 +3,14 @@
 Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
+### Changed
+- **Renamed the repo to `ai-for-structural-engineers`** (was
+  `matlab-claude-for-engineers`; GitHub redirects old links). README rewritten
+  around what structural engineers and students search for (Eurocode in
+  Python, PyNite, Revit MCP, Robot MCP, plasticity, verifying AI results);
+  search-friendly doc titles; GitHub description and topics.
+- `setup.ps1` step 7/8 detects the Revit MCP add-on and registers any edition
+  other than Write-Tools at local scope (overrides `.mcp.json`).
 ### Added
 - **PyNite FE example** `examples/frame/continuous_beam_pynite.py`: two-span
   continuous beam (reactions, M, V, deflection, diagrams) with a self-check

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# setup.sh - one-command setup for MATLAB + Claude for Engineers (macOS / Linux)
+# setup.sh - one-command setup for AI for Structural Engineers (macOS / Linux)
 #
 # Run from the repo root:
 #     bash setup.sh                 # base setup
@@ -47,7 +47,7 @@ fail() {
   n_failed=$((n_failed + 1))
 }
 
-echo "== MATLAB + Claude for Engineers - setup =="
+echo "== AI for Structural Engineers - setup =="
 echo "Repo: $repo"
 
 # --- 1. Python venv + libraries --------------------------------------------

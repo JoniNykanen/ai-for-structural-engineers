@@ -1,4 +1,4 @@
-# 12 — Suomalaiset ilmaiset referenssi- ja validointityökalut
+# 12 — Suomalaiset ilmaiset mitoitustyökalut ristiintarkistukseen (Puuinfo ym.)
 
 *Käytä näitä eurocode-fi-laskujen **riippumattomaan ristiintarkistukseen** ja
 referenssinä. Linkit ja kuvaukset vain — sisältöä (kaavoja, RIL/normidataa) ei

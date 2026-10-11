@@ -1,4 +1,4 @@
-# Revit examples
+# Revit + Python: check Revit beam data and analyse it (Revit MCP examples)
 
 Reading a Revit model with Autodesk's **Revit MCP** and checking it with the
 repo's Python tools. Setup and tool list: [docs/17](../../docs/17-revit-mcp.md).

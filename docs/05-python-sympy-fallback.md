@@ -1,4 +1,4 @@
-# 05 — Method 1: The no-license Python / SymPy path (start here)
+# 05 — Method 1: Free Python / SymPy path for engineering calculations (start here)
 
 *Goal: do real symbolic and numeric engineering calculations with **zero MATLAB
 license** — just Python. This is the fastest way to prove the whole workflow.*

@@ -1,4 +1,4 @@
-# 11 — Eurocode + Suomen NA: normipohjainen mitoitus (eurocode-fi)
+# 11 — Eurocode-mitoitus Pythonilla + Suomen kansallinen liite (eurocode-fi)
 
 *Ammattikäyttöön (myös opiskelijoille): tekoäly tuottaa normienmukaisia
 rakennelaskuja, jotka **siteeraavat pykälän, näyttävät laskun ja ovat

@@ -1,4 +1,4 @@
-matlab-claude-for-engineers
+ai-for-structural-engineers
 Copyright 2026 Joni Nykänen — https://joninykanen.com
 
 This product includes software and documentation developed by Joni Nykänen.
@@ -9,8 +9,9 @@ Documentation (README.md, CHANGELOG.md and everything under docs/) is licensed
 under Creative Commons Attribution 4.0 International (CC BY 4.0) — see
 LICENSE-docs.
 
-The names "matlab-claude-for-engineers" and "eurocode-fi" and the name
-"Joni Nykänen" are not licensed for use as trademarks (Apache-2.0 §6).
+The names "ai-for-structural-engineers" (formerly "matlab-claude-for-engineers"),
+"eurocode-fi" and "Joni Nykänen" are not licensed for use as trademarks
+(Apache-2.0 §6).
 Forks must not present themselves as the original or as endorsed by the author.
 
 This repository does not contain Eurocode or SFS National Annex text, tables or

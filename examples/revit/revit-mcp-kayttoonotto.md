@@ -16,9 +16,9 @@ Laajempi englanninkielinen ohje: [docs/17 – Revit MCP](../../docs/17-revit-mcp
 
 **1. Asenna lisäosa.** Autodesk Account → *Products and Services* →
 *Product Updates* → suodata *Revit 2027* → *Add-ons*. Asenna yksi versio:
-*Read-Tools* (vain luku) tai *Write-Tools* (luku ja muokkaus). Repon
-`.mcp.json` osoittaa Write-Tools-versioon. Jos asennat Read-Toolsin, vaihda
-polussa `Write-Tools` → `Read-Tools`.
+*Read-Tools* (vain luku) tai *Write-Tools* (luku ja muokkaus). Aja sen
+jälkeen `./setup.ps1`: se tunnistaa asentamasi version ja rekisteröi sen
+Claude Codeen.
 
 **2. Käynnistä Revit uudelleen.** Lisäosa latautuu vain Revitin käynnistyessä.
 Jos Revit oli auki asennuksen aikana, palvelin ei löydä sitä. Jos Revit kysyy

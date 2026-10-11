@@ -1,4 +1,4 @@
-# 10 — Autodesk Robot Structural Analysis (advanced, optional)
+# 10 — Autodesk Robot Structural Analysis with Python (COM API) and Claude (advanced, optional)
 
 *Two things: (A) an easy official MCP that gives Claude trusted Autodesk docs,
 and (B) driving Robot itself from code. Windows + licensed Robot for (B).*

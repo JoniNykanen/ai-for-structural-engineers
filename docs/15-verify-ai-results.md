@@ -1,4 +1,4 @@
-# 15 — How to check an AI calculation
+# 15 — How to verify an AI engineering calculation
 
 *Claude runs real code, but the code can still be wrong. Here are six quick
 checks that catch most mistakes, plus a real bug from this repo that a
