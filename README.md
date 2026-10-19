@@ -19,6 +19,7 @@ You do **not** need to be a programmer. If you can copy-paste a command, you can
 | **Read a Tekla model and check a steel beam to EC3** | Community Tekla MCP + Python | Tekla Structures | [docs/18](docs/18-tekla-mcp.md) |
 | **Read and check a Revit model with AI** | Autodesk Revit MCP + Python | Revit 2027 | [docs/17](docs/17-revit-mcp.md) |
 | **Drive Robot Structural Analysis with AI** | Robot MCP | Robot | [docs/14](docs/14-robot-mcp.md) |
+| **Re-check a Mathcad worksheet in Python** (every formula re-computed, stale results and errors flagged) | `check_mcdx.py` reads the .mcdx file | ❌ No (free Mathcad Express is enough) | [docs/19](docs/19-mathcad.md) |
 | **Plasticity and mechanics of materials** (von Mises, Tresca, plastic hinges) | Python / SymPy | ❌ No | [docs/05](docs/05-python-sympy-fallback.md) |
 | **Verify an AI structural calculation** | Checks built into every example | ❌ No | [docs/15](docs/15-verify-ai-results.md) |
 | **Use MATLAB with Claude** (optional) | Engine API or MATLAB MCP | MATLAB | [docs/03](docs/03-connect-matlab-engine-api.md), [docs/04](docs/04-connect-matlab-mcp.md) |
@@ -118,6 +119,10 @@ Field-tested on Revit 2027.3. Tools, units (Revit returns feet) and gotchas → 
 
 A third-party MCP server lets Claude build a Robot model, run it and read results (35 tools). `./setup.ps1` installs it when Robot is detected. Field-tested on Robot 2027, with known gaps → [docs/14 — Robot MCP](docs/14-robot-mcp.md) · Python/COM route → [docs/10](docs/10-connect-robot-structural.md) · suomeksi: [Robot MCP – käyttöönotto](examples/robot/robot-mcp-kayttoonotto.md).
 
+## PTC Mathcad: check a worksheet in Python
+
+`examples/mathcad/check_mcdx.py` reads a Mathcad Prime `.mcdx` file directly, without Mathcad, re-computes every formula with its own unit handling and compares the result with what Mathcad saved. It flags stale results, unit slips and Mathcad's own errors. Works with the **free Mathcad Express**. Field-tested on Mathcad Prime 12: all 327 displayed results of a real timber design worksheet matched. Driving Mathcad itself needs a Prime licence; Express vs Prime and setup → [docs/19 — Mathcad](docs/19-mathcad.md).
+
 ## Plasticity and mechanics of materials examples
 
 Ready-to-run code for theory of plasticity and strength of materials courses:
@@ -162,7 +167,8 @@ Each example runs at least one independent check and says whether it passed: a c
 [15 Verify AI results](docs/15-verify-ai-results.md) ·
 [16 Academic integrity](docs/16-academic-integrity.md) ·
 [17 Revit MCP](docs/17-revit-mcp.md) ·
-[18 Tekla MCP](docs/18-tekla-mcp.md)
+[18 Tekla MCP](docs/18-tekla-mcp.md) ·
+[19 Mathcad](docs/19-mathcad.md)
 
 ## Skills and plugins
 
@@ -179,7 +185,7 @@ ai-for-structural-engineers/
 ├── .mcp.json              ← MCP servers: Robot, Revit
 ├── params/                ← your national-annex values (not shipped)
 ├── docs/                  ← step-by-step guides, numbered in reading order
-├── examples/              ← eurocode, frame (PyNite), revit, robot, plasticity, sympy, MATLAB
+├── examples/              ← eurocode, frame (PyNite), revit, robot, mathcad, plasticity, sympy, MATLAB
 └── tests/                 ← self-checks, run in CI
 ```
 
@@ -194,6 +200,6 @@ AI can be confidently wrong. This repo is built around a rule: **Claude shows it
 - **Code** (examples, scripts, hooks, setup scripts, Claude skills): [Apache License 2.0](LICENSE)
 - **Documentation** (README, CHANGELOG, `docs/`): [CC BY 4.0](LICENSE-docs). Reuse and adapt it freely, including commercially, as long as you credit *Joni Nykänen — ai-for-structural-engineers*.
 
-Keep the [NOTICE](NOTICE) file in forks. The project names are not licensed as trademarks. No Eurocode or SFS values ship with this repo: you supply them in `params/na_timber.yaml`. MATLAB, Revit, Robot Structural Analysis and Claude are trademarks of their owners; this project is not affiliated with them.
+Keep the [NOTICE](NOTICE) file in forks. The project names are not licensed as trademarks. No Eurocode or SFS values ship with this repo: you supply them in `params/na_timber.yaml`. MATLAB, Mathcad, Revit, Robot Structural Analysis and Claude are trademarks of their owners; this project is not affiliated with them.
 
 Use it, fork it, share the kit with your class or office. Your own `solved/` session data is a different matter: it stays private. If your fork is public, keep auto-push off and don't commit `solved/` (see [docs/09](docs/09-how-this-repo-learns.md)).

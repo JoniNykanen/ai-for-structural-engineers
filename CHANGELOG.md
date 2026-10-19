@@ -4,6 +4,14 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Added
+- **PTC Mathcad worksheet checker** (`docs/19`, `examples/mathcad/`):
+  `check_mcdx.py` reads a Mathcad Prime `.mcdx` file without Mathcad
+  (`worksheet.xml` + `result.xml`), re-evaluates every formula with its own
+  unit handling and flags stale results, unit slips and Mathcad errors. Works
+  with the free Mathcad Express. Tests in `tests/test_check_mcdx.py` build
+  `.mcdx` fixtures in code. Field-tested on Mathcad Prime 12. Prime automation
+  (COM API / MCP) is documented but not yet field-tested: Express can't assign
+  inputs/outputs, and the 30-day trial stayed in Express mode.
 - **Tekla Structures + EC3 steel** (`docs/18`, `examples/eurocode/steel/`):
   `export_tekla_beam.py` reads a beam from an open Tekla model (Open API via
   pythonnet); `steel_beam_ec3.py` checks it to EN 1993-1-1 (class, bending,
