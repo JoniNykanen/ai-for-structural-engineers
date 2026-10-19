@@ -4,6 +4,14 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Added
+- **Cold-formed RHS/SHS truss member check** (`examples/eurocode/steel/rhs_member_ec3.py`,
+  EN 1993-1-1): section properties with rounded corners (closed form, verified by
+  numerical integration), class, N/M/N+M, flexural buckling y/z with Annex BB
+  buckling-length factors, interaction 6.61. New `params/na_steel.example.yaml`
+  fields (hollow-section class limits, corner radii, buckling curve, L_cr factors),
+  TEST-only fixture and 11 tests. `eurocode-fi` skill: steel pitfalls (c definition,
+  corner radii, buckling curve, Table B.3 row/column choice, which analysis feeds
+  member checks).
 - **Tekla Structures + EC3 steel** (`docs/18`, `examples/eurocode/steel/`):
   `export_tekla_beam.py` reads a beam from an open Tekla model (Open API via
   pythonnet); `steel_beam_ec3.py` checks it to EN 1993-1-1 (class, bending,
