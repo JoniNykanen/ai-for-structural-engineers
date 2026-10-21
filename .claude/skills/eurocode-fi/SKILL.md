@@ -5,7 +5,8 @@ description: >-
   Finnish National Annex (SFS-NA) / RakMK — sizing or checking members, load
   combinations, ULS/SLS verification. Enforces clause citation, no invented code
   values, shown working, SI units, Finnish output, and an independent re-check.
-  First implemented vertical: timber (EN 1995). Do NOT reproduce copyrighted
+  Implemented: timber (EN 1995), steel (EN 1993-1-1 beams and hollow-section
+  truss members). Do NOT reproduce copyrighted
   standard text or tables.
 metadata:
   type: reference
@@ -83,7 +84,36 @@ runnable script that produced the numbers. End every deliverable with:
 *"Apuväline; suunnittelija vastaa tuloksista. Arvot käyttäjän lisensoidusta
 normista. Ei korvaa EN 1995-1-1 / SFS-NA:ta."*
 
+## Steel (EN 1993-1-1) — hollow-section truss members
+
+Implemented: `examples/eurocode/steel/rhs_member_ec3.py` (cold-formed RHS/SHS,
+N + M, values from `params/na_steel.yaml`). Pitfalls that change the answer:
+
+- **Section properties from the real geometry.** Cold-formed tubes have rounded
+  corners whose outer radius depends on wall thickness (EN 10219-2; table in the
+  params file, `cold_formed_rhs.r_o_over_t`). Compute A, I, W_pl with the
+  corners, not as a sharp-cornered box; r_i = r_o − t.
+- **Classification `c` = straight part of the wall, b − 2r_o** (Table 5.2). The
+  shortcut c = b − 3t gives a different c/t and can flip the class at a limit.
+- **Buckling curve** for cold-formed hollow sections is a different one than for
+  hot-finished — read α from the params file; don't reuse a hot-rolled value.
+- **Buckling lengths in welded hollow-section trusses** (Annex BB.1.3): chords and
+  braces have their own reduction factors on the system length (params
+  `member_buckling.Lcr_factor_chord/brace`). State which you used; give the
+  full-length result as a fallback if the checker uses L_cr = L.
+- **C_my from Table B.3 is a choice — state it.** The row depends on the moment
+  diagram: end moments only (ψ) vs. a span moment M_s from transverse load
+  (α_s = M_s/M_h, keep the signs). Within that row the *uniform load* and
+  *concentrated load* columns differ; a truss chord loaded through purlins is
+  physically point-loaded, so the concentrated-load column is defensible even
+  when the analysis model uses a line load. Report the alternative if unsure.
+- **Which forces go into member checks:** if α_cr < 10 (§5.2.1), use second-order
+  results including the sway imperfections (§5.3.2); members of the truss take
+  their N and M from that analysis, not from the first-order one.
+- **χ_LT = 1** for square/rectangular hollow sections in the 6.61/6.62 checks
+  (not susceptible to torsional deformation, Annex B Table B.1).
+
 ## Reach for docs
 Use the `autodesk-product-help` MCP or the engineer's licensed PDFs to confirm a
-clause you are unsure of. See `docs/11-eurocode-fi.md`. Steel (EN 1993) / concrete
-(EN 1992) are future verticals — the same rules apply.
+clause you are unsure of. See `docs/11-eurocode-fi.md`. Concrete (EN 1992) is a
+future vertical — the same rules apply.
