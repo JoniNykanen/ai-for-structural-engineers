@@ -1,0 +1,2 @@
+# Parallel PRs all add lines to CHANGELOG.md; keep both sides instead of conflicting.
+CHANGELOG.md merge=union
