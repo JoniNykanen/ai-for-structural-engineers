@@ -6,3 +6,4 @@ _One line per captured session. Auto-maintained by the Stop hook; see docs/09-ho
 - 2026-10-10 — session ab3cdd6c — 2 turns — [solved/2026-10-10_ab3cdd6c.md](solved/2026-10-10_ab3cdd6c.md)
 - 2026-10-11 — session 3fbc85e6 — 12 turns — [solved/2026-10-11_3fbc85e6.md](solved/2026-10-11_3fbc85e6.md)
 - 2026-10-11 — session 96472d9d — 31 turns — [solved/2026-10-11_96472d9d.md](solved/2026-10-11_96472d9d.md)
+- 2026-10-21 — session 0d4f6bca — 3 turns — [solved/2026-10-21_0d4f6bca.md](solved/2026-10-21_0d4f6bca.md)
