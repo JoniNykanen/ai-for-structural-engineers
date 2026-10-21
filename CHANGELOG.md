@@ -3,6 +3,10 @@
 Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
+### Changed
+- **Robot MCP gotchas** (docs/14 + `robot-structural` skill): unsaved cases are
+  lost on reopen, non-existent cases read back as zeros instead of an error,
+  results must be recalculated after reopening a file.
 ### Added
 - **Tekla Structures + EC3 steel** (`docs/18`, `examples/eurocode/steel/`):
   `export_tekla_beam.py` reads a beam from an open Tekla model (Open API via
