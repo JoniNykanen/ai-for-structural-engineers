@@ -8,6 +8,14 @@ Notable changes to this repo. Keep entries short; newest on top.
   lost on reopen, non-existent cases read back as zeros instead of an error,
   results must be recalculated after reopening a file.
 ### Added
+- **PTC Mathcad worksheet checker** (`docs/19`, `examples/mathcad/`):
+  `check_mcdx.py` reads a Mathcad Prime `.mcdx` file without Mathcad
+  (`worksheet.xml` + `result.xml`), re-evaluates every formula with its own
+  unit handling and flags stale results, unit slips and Mathcad errors. Works
+  with the free Mathcad Express. Tests in `tests/test_check_mcdx.py` build
+  `.mcdx` fixtures in code. Field-tested on Mathcad Prime 12. Prime automation
+  (COM API / MCP) is documented but not yet field-tested: Express can't assign
+  inputs/outputs, and the 30-day trial stayed in Express mode.
 - **Cold-formed RHS/SHS truss member check** (`examples/eurocode/steel/rhs_member_ec3.py`,
   EN 1993-1-1): section properties with rounded corners (closed form, verified by
   numerical integration), class, N/M/N+M, flexural buckling y/z with Annex BB

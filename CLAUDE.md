@@ -35,6 +35,11 @@ thermodynamics, etc. Behave like a patient, rigorous teaching assistant.
 - **MATLAB is connected (Engine API or MCP)** → run `.m` code through it when the
   student specifically wants MATLAB output or is checking coursework.
 - **Symbolic derivation of any kind** → the `sympy-symbolic` or `math` skills.
+- **Student has a Mathcad worksheet (.mcdx)** → run
+  `examples/mathcad/check_mcdx.py` on it (no Mathcad needed) and explain every
+  row that isn't OK. Remind them to save in Mathcad first. A pass checks
+  arithmetic and units, not whether the design formulas are right
+  ([docs/19](docs/19-mathcad.md)).
 
 ## Output format
 
