@@ -23,8 +23,22 @@ classification:               # rolled I-section, bending about the strong axis
   flange_ct_class1:   # -   outstand flange c/t limit for class 1, multiplied by epsilon  — EN 1993-1-1 Table 5.2  [FILL]
   web_ct_class1:      # -   internal web in bending c/t limit for class 1, × epsilon      — EN 1993-1-1 Table 5.2  [FILL]
 
+  # cold-formed hollow sections (RHS/SHS), internal part in compression — used by rhs_member_ec3.py
+  hollow_internal_ct_class1:  # -   c/t limit for class 1, × epsilon   — EN 1993-1-1 Table 5.2  [FILL]
+  hollow_internal_ct_class2:  # -   c/t limit for class 2, × epsilon   — EN 1993-1-1 Table 5.2  [FILL]
+  hollow_internal_ct_class3:  # -   c/t limit for class 3, × epsilon   — EN 1993-1-1 Table 5.2  [FILL]
+
+cold_formed_rhs:              # geometry for section properties — rhs_member_ec3.py
+  r_o_over_t:         # list of [t_max_mm, r_o/t]: outer corner radius as a multiple of t for t ≤ t_max
+                      # e.g. [[t1, k1], [t2, k2], ...] — EN 10219-2 (corner profile for calculation)  [FILL]
+
+member_buckling:              # flexural buckling, EN 1993-1-1 §6.3.1
+  alpha_cold_formed_hollow:   # -   imperfection factor of the buckling curve for cold-formed hollow sections — Table 6.2 + Table 6.1  [FILL]
+  Lcr_factor_chord:   # -   L_cr / L for hollow-section truss chords  — EN 1993-1-1 Annex BB.1.3  [FILL]
+  Lcr_factor_brace:   # -   L_cr / L for hollow-section truss braces  — EN 1993-1-1 Annex BB.1.3  [FILL]
+
 shear:
-  eta:                # -   shear area factor eta                                         — EN 1993-1-5 §5.1 + SFS-NA  [FILL]
+  eta:              # -   shear area factor eta                                         — EN 1993-1-5 §5.1 + SFS-NA  [FILL]
   hw_tw_limit:        # -   web shear-buckling limit hw/tw ≤ limit·epsilon/eta              — EN 1993-1-1 §6.2.6(6)  [FILL]
 
 ltb:                          # lateral-torsional buckling, EN 1993-1-1 §6.3.2

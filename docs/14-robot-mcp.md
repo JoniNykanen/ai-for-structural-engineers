@@ -130,6 +130,14 @@ A case created with `analysis="static_nonlinear"` gives geometrically nonlinear
   colleagues using Robot output expect these signs.
 - **If the user closes the project in the GUI**, calls fail with COM error
   `-2147352567`. Run `rsap_status`; if `project: false`, reopen the file.
+- **Nothing is on disk until `rsap_save_project`.** Cases and loads added after
+  the last save are gone when the file is reopened. Save right after creating
+  cases, not only after calculating.
+- **Reading a case that doesn't exist returns zeros, not an error.** All-zero
+  forces or reactions usually mean a wrong case number — check
+  `rsap_list_load_cases` before trusting them.
+- **After reopening a file, results are gone.** Reading them fails with the same
+  COM error; run `rsap_calculate` first.
 - **Buckling modes in the GUI:** the node-displacement table shows the *static*
   solution even when a mode is selected. Mode shapes appear only in the diagram
   (*Results → Diagrams for Bars → Deformation*, then **Normalize**). The global

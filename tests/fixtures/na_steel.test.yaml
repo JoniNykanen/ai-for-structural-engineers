@@ -1,0 +1,27 @@
+# TEST-ONLY — NOT standard values.
+# ============================================================================
+# Artificial round numbers used only by tests/test_rhs_member_ec3.py so the
+# expected results can be hand-computed. They are deliberately NOT Eurocode /
+# SFS-NA / EN 10219 values. Never use this file for design.
+
+material:
+  grade: TEST
+  f_y: 300.0          # N/mm^2  (artificial)
+  E: 200000.0         # N/mm^2  (artificial)
+
+partial_factors:
+  gamma_M0: 1.0       # (artificial)
+  gamma_M1: 1.0       # (artificial)
+
+classification:
+  hollow_internal_ct_class1: 30.0   # (artificial)
+  hollow_internal_ct_class2: 35.0   # (artificial)
+  hollow_internal_ct_class3: 40.0   # (artificial)
+
+cold_formed_rhs:
+  r_o_over_t: [[100.0, 1.5]]        # (artificial) r_o = 1.5 t for every t
+
+member_buckling:
+  alpha_cold_formed_hollow: 0.5     # (artificial)
+  Lcr_factor_chord: 1.0             # (artificial)
+  Lcr_factor_brace: 1.0             # (artificial)

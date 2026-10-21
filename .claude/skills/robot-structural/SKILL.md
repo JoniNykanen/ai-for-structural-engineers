@@ -37,7 +37,9 @@ Field-tested rules for the `rsap_*` tools (details: docs/14, *Field-tested notes
 - Verify reactions sum to the applied load; `rsap_node_reaction` also returns
   values for non-support nodes. Bar `fx` > 0 = compression.
 - COM error `-2147352567` usually means the project was closed — `rsap_status`,
-  then reopen.
+  then reopen — or that results are missing after a reopen — `rsap_calculate`.
+- `rsap_save_project` right after creating cases; unsaved cases vanish on reopen.
+- All-zero results = probably a non-existent case; check `rsap_list_load_cases`.
 
 ## Rule 0 — verify, don't guess
 

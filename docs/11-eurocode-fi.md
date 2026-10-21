@@ -69,8 +69,12 @@ toimimaan tarkastajana, joka yrittää löytää virheen — ei kumileimasin.
    sekä laskumuistion että ajettavan skriptin.
 
 ## Nykytila ja laajennus
-- Toteutettu: **puu (EN 1995-1-1)**. Framework on yleiskäyttöinen.
-- Tulossa omina paloinaan: teräs (EN 1993), betoni (EN 1992), kuormat (EN 1990/1991).
+- Toteutettu: **puu (EN 1995-1-1)** ja **teräs (EN 1993-1-1)**: valssattu
+  I-palkki (`steel_beam_ec3.py`) sekä kylmämuovattu RHS/SHS-ristikkosauva
+  (`rhs_member_ec3.py`: poikkileikkaussuureet pyöristetyin nurkin, luokka,
+  N/M/N+M, taivutusnurjahdus, yhteisvaikutus 6.61; ristiintarkistus numeerisella
+  integroinnilla). Teräksen sudenkuopat: `eurocode-fi`-skill, kohta *Steel*.
+- Tulossa omina paloinaan: betoni (EN 1992), kuormat (EN 1990/1991).
 - Epävarmasta pykälästä: käytä `autodesk-product-help` MCP:tä tai omia lisensoituja
   PDF:iäsi.
 

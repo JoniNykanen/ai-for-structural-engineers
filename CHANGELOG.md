@@ -3,6 +3,10 @@
 Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
+### Changed
+- **Robot MCP gotchas** (docs/14 + `robot-structural` skill): unsaved cases are
+  lost on reopen, non-existent cases read back as zeros instead of an error,
+  results must be recalculated after reopening a file.
 ### Added
 - **PTC Mathcad worksheet checker** (`docs/19`, `examples/mathcad/`):
   `check_mcdx.py` reads a Mathcad Prime `.mcdx` file without Mathcad
@@ -12,6 +16,14 @@ Notable changes to this repo. Keep entries short; newest on top.
   `.mcdx` fixtures in code. Field-tested on Mathcad Prime 12. Prime automation
   (COM API / MCP) is documented but not yet field-tested: Express can't assign
   inputs/outputs, and the 30-day trial stayed in Express mode.
+- **Cold-formed RHS/SHS truss member check** (`examples/eurocode/steel/rhs_member_ec3.py`,
+  EN 1993-1-1): section properties with rounded corners (closed form, verified by
+  numerical integration), class, N/M/N+M, flexural buckling y/z with Annex BB
+  buckling-length factors, interaction 6.61. New `params/na_steel.example.yaml`
+  fields (hollow-section class limits, corner radii, buckling curve, L_cr factors),
+  TEST-only fixture and 11 tests. `eurocode-fi` skill: steel pitfalls (c definition,
+  corner radii, buckling curve, Table B.3 row/column choice, which analysis feeds
+  member checks).
 - **Tekla Structures + EC3 steel** (`docs/18`, `examples/eurocode/steel/`):
   `export_tekla_beam.py` reads a beam from an open Tekla model (Open API via
   pythonnet); `steel_beam_ec3.py` checks it to EN 1993-1-1 (class, bending,
