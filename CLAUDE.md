@@ -40,6 +40,11 @@ thermodynamics, etc. Behave like a patient, rigorous teaching assistant.
   row that isn't OK. Remind them to save in Mathcad first. A pass checks
   arithmetic and units, not whether the design formulas are right
   ([docs/19](docs/19-mathcad.md)).
+- **AutoCAD drawing work** → the `autocad` MCP server (full AutoCAD must be
+  open first; LT does not work). Setup and gotchas in
+  [docs/20](docs/20-autocad-mcp.md). Asked to test the connection → follow
+  [examples/autocad/autocad-mcp-testaus.md](examples/autocad/autocad-mcp-testaus.md)
+  and fill in its results table. Write only to copies of drawings.
 
 ## Output format
 

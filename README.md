@@ -19,6 +19,7 @@ You do **not** need to be a programmer. If you can copy-paste a command, you can
 | **Read a Tekla model and check a steel beam to EC3** | Community Tekla MCP + Python | Tekla Structures | [docs/18](docs/18-tekla-mcp.md) |
 | **Read and check a Revit model with AI** | Autodesk Revit MCP + Python | Revit 2027 | [docs/17](docs/17-revit-mcp.md) |
 | **Drive Robot Structural Analysis with AI** | Robot MCP | Robot | [docs/14](docs/14-robot-mcp.md) |
+| **Draw and read AutoCAD drawings with AI** (experimental) | Community AutoCAD MCP | AutoCAD (full, not LT); DXF-only mode needs none | [docs/20](docs/20-autocad-mcp.md) |
 | **Re-check a Mathcad worksheet in Python** (every formula re-computed, stale results and errors flagged) | `check_mcdx.py` reads the .mcdx file | ❌ No (free Mathcad Express is enough) | [docs/19](docs/19-mathcad.md) |
 | **Plasticity and mechanics of materials** (von Mises, Tresca, plastic hinges) | Python / SymPy | ❌ No | [docs/05](docs/05-python-sympy-fallback.md) |
 | **Verify an AI structural calculation** | Checks built into every example | ❌ No | [docs/15](docs/15-verify-ai-results.md) |
@@ -168,7 +169,8 @@ Each example runs at least one independent check and says whether it passed: a c
 [16 Academic integrity](docs/16-academic-integrity.md) ·
 [17 Revit MCP](docs/17-revit-mcp.md) ·
 [18 Tekla MCP](docs/18-tekla-mcp.md) ·
-[19 Mathcad](docs/19-mathcad.md)
+[19 Mathcad](docs/19-mathcad.md) ·
+[20 AutoCAD MCP](docs/20-autocad-mcp.md)
 
 ## Skills and plugins
 
@@ -182,10 +184,10 @@ ai-for-structural-engineers/
 ├── README.md              ← you are here
 ├── CLAUDE.md              ← makes Claude show its working and check every result
 ├── requirements.txt       ← Python packages (NumPy, SciPy, SymPy, PyNite …)
-├── .mcp.json              ← MCP servers: Robot, Revit
+├── .mcp.json              ← MCP servers: Robot, Revit, AutoCAD
 ├── params/                ← your national-annex values (not shipped)
 ├── docs/                  ← step-by-step guides, numbered in reading order
-├── examples/              ← eurocode, frame (PyNite), revit, robot, mathcad, plasticity, sympy, MATLAB
+├── examples/              ← eurocode, frame (PyNite), revit, robot, autocad, mathcad, plasticity, sympy, MATLAB
 └── tests/                 ← self-checks, run in CI
 ```
 

@@ -8,6 +8,14 @@ Notable changes to this repo. Keep entries short; newest on top.
   lost on reopen, non-existent cases read back as zeros instead of an error,
   results must be recalculated after reopening a file.
 ### Added
+- **AutoCAD MCP** (`docs/20`, `examples/autocad/`): `.mcp.json` registers the
+  community server U-C4N/Autocad-MCP (MIT, PyPI `autocad-mcp-pro==1.8.0` via
+  `uvx`) as `autocad`, live AutoCAD engine, `CAD_LAUNCH=never`,
+  `LISP_POLICY=read`. Headless DXF mode smoke-tested on Windows 11 without
+  AutoCAD; live AutoCAD not yet tested. Finnish install + test protocol
+  (T1–T7: connection, layers, profile texts, beam, IPE300 section, member
+  table, save) in `examples/autocad/autocad-mcp-testaus.md`. Full AutoCAD
+  only; `auto` does not fall back to DXF on Windows.
 - **PTC Mathcad worksheet checker** (`docs/19`, `examples/mathcad/`):
   `check_mcdx.py` reads a Mathcad Prime `.mcdx` file without Mathcad
   (`worksheet.xml` + `result.xml`), re-evaluates every formula with its own
