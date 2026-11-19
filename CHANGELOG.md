@@ -4,6 +4,11 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Changed
+- **CAD drawing rules** (`CLAUDE.md`): start from the user's own CAD template
+  (layers, text and dimension styles), start every drawing at 0,0, write CAD
+  text in ALL CAPS. AutoCAD can also be driven through plain COM when the
+  `autocad` MCP is not connected; `Documents.Add` returns an object without
+  `SaveAs`, use `ActiveDocument`.
 - **Robot MCP gotchas** (docs/14 + `robot-structural` skill): unsaved cases are
   lost on reopen, non-existent cases read back as zeros instead of an error,
   results must be recalculated after reopening a file.

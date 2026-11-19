@@ -46,6 +46,18 @@ thermodynamics, etc. Behave like a patient, rigorous teaching assistant.
   [examples/autocad/autocad-mcp-testaus.md](examples/autocad/autocad-mcp-testaus.md)
   and fill in its results table. Write only to copies of drawings.
 
+## CAD drawings (AutoCAD)
+
+- **Start from the user's own CAD template** (`.dwt`), not an empty drawing, so
+  the ready layers, text styles and dimension styles are used. Pick the
+  dimension style by scale, set `LTSCALE` to match and name which template layer
+  each part went on.
+- **Every drawing starts at 0,0**: the extents (incl. dimensions and notes) have
+  their lower-left corner at the origin, nothing at negative coordinates.
+- **Text in CAD drawings is ALL CAPS.**
+- Dimensions without a parameter file are illustrative: label the drawing
+  "MALLIKUVA, EI MITOITETTU".
+
 ## Output format
 
 **Given** (inputs + units) → **Equation** → **Substitution** → **Result** (boxed,
