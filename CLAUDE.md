@@ -57,6 +57,17 @@ thermodynamics, etc. Behave like a patient, rigorous teaching assistant.
 - **Text in CAD drawings is ALL CAPS.**
 - Dimensions without a parameter file are illustrative: label the drawing
   "MALLIKUVA, EI MITOITETTU".
+- **Sheet layout (Layout tab):** ISO 216 A4 or a multiple of it. The drawing
+  (one viewport at the stated scale) fills the left section; **all text** (title
+  block and notes) sits in a right-hand section, with the title block flush to
+  the frame's right edge. Plot fully monochrome with a different line weight per
+  line type (visible, hidden, dimension, text). The notes carry the required
+  information: materials, dimensions and levels, loads, quantities, work
+  instructions. Example title blocks are fictional and marked as such.
+- **Plot setup that works:** full-bleed A4 media (the plain A4 media has margins
+  that clip the frame) and a Window plot of exactly the paper size, so paper
+  space 0,0 is the sheet's lower-left corner. Check the result by plotting to
+  PDF and looking at it.
 
 ## Output format
 
