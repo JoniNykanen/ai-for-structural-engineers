@@ -100,7 +100,7 @@ Claude täyttää tämän taulukon. Lähetä lopuksi tämä tiedosto Jonille.
 
 | Testi | Tulos | Huomiot |
 |---|---|---|
-| T1 Yhteys | OK | `system_status`: `"backend":"com"`, `"connected":true`, `"active_document":"testi_kopio.dwg"`, AutoCAD `25.1s`, 257 työkalua. Ensimmäisellä yrityksellä (ennen `uv`:n asennusta) VIRHE: `CONNECTION_CLOSED: "Connection closed"`, koska `uvx` puuttui. Asennus + Clauden uudelleenkäynnistys korjasi. |
+| T1 Yhteys | OK | `system_status`: `"backend":"com"`, `"connected":true`, `"active_document":"testi_kopio.dwg"`, AutoCAD `25.1s`, 257 työkalua. Ajettu kahdesti (2026-11-19 ja 2026-11-22), molemmilla kerroilla OK. Epäonnistuneet yritykset ennen: 19.11. `CONNECTION_CLOSED: "Connection closed"` (`uvx` puuttui, korjattu asentamalla `uv` ja käynnistämällä Claude uudelleen); 22.11. `CONNECT_TIMEOUT: "MCP server autocad connection timed out after 30000ms"` (AutoCAD ei ollut auki, `CAD_LAUNCH=never`; korjattu avaamalla AutoCAD ja testikopio ja yhdistämällä `/mcp` → Reconnect). |
 | T2 Tasot | OK | `analysis_layer_stats`: 0 = 0, PALKIT = 2, PILARIT = 2, TEKSTI = 8, MITAT = 0 (5 tasoa), vastaa testipiirustusta. Ei verrattu AutoCADin Layer Properties -ikkunaan. |
 | T3 Profiilitekstit | OK | `entity_list` (TEXT) palautti tekstit sijainteineen. Kokonaisen sanan haulla löytyi 6/6: IPE330, HEA200, HEB240, RHS 100x100x5, SHS 80x80x4, GL30C 140x360. Ei vääriä osumia: `PIPE 5 M` (sisältää kirjaimet IPE) ja `KATTOPALKKI` jäivät pois. Sijainnit täsmäävät testipiirustuksen luontiarvoihin, mutta niitä ei tarkistettu AutoCADin `ID`-komennolla. Ei erillistä tekstihakutyökalua käytetty, vaan lista suodatettiin Clauden päässä. |
 | T4 Palkki | OK | Taso GEOMETRY, viiva 7200 (`length` 7200, COM `Length` 7200,0), kaksi kolmiotukea (3 viivaa/pää), teksti `IPE300 S355`, mittaviiva (COM `Measurement` 7200,0). Mittaus luettiin COM:lla, ei AutoCADin `DIST`-komennolla. |
@@ -112,12 +112,13 @@ Claude täyttää tämän taulukon. Lähetä lopuksi tämä tiedosto Jonille.
 - AutoCAD-versio: AutoCAD 2026 (acad.exe 25.1.164.0.0, Education/non-commercial); myös 2023 asennettuna
 - Windows-versio: Windows 11 Pro 10.0.26200
 - `uvx --version`: uvx 0.13.9 (asennettu 2026-11-19, `autocad-mcp-pro==1.8.0`)
-- Testipäivä: 2026-11-19
+- Testipäivä: 2026-11-19 (1. ajo) ja 2026-11-22 (uusinta, kaikki T1–T7 OK samoin tuloksin)
 - Testipiirustus: synteettinen `C:	emp	esti_kopio.dwg` (4 tasoa, 6 profiilitekstiä + 2 harhatekstiä), ei oikea rakennepiirustus
 - Muuta huomattavaa (hitaus, jumiutumiset, virheilmoitukset):
+  - Uusinnassa 22.11. T4–T6 ajettiin yhtenä `cad_batch`-kutsuna (9 askelta, kaikki onnistuivat), tulokset samat kuin ensimmäisellä ajolla. T7:n `drawing_open` toimi, vaikka kaikki piirustukset oli suljettu (AutoCAD ilman avointa piirustusta).
   - Ei hitautta eikä jumiutumisia. Kaikki kutsut onnistuivat ensimmäisellä yrityksellä.
   - `analysis_list_properties` ei näytä mittaviivan mitattua arvoa eikä taulukon sisältöä. Ne luettiin AutoCADista COM:lla (vain luku) tarkistuksena.
   - `entity_create_table` käyttää oletuksena tasoa `TEXT`, jota ei ollut. Taso `TEKSTI` annettiin erikseen.
   - `cad_batch`-rollback on vain "best effort" (palvelimen oma huomautus).
-  - Ennen `uv`:n asennusta AutoCAD lakkasi kerran vastaamasta COM:iin avoimen dialogin takia. Ei liity MCP-palvelimeen.
+  - 19.11. ennen `uv`:n asennusta AutoCAD lakkasi kerran vastaamasta COM:iin avoimen dialogin takia. Ei liity MCP-palvelimeen.
   - Kaksi avointa piirustusta (testi + `Drawing1.dwg`), `active_document_changed` pysyi `false`.
