@@ -44,6 +44,7 @@ Thumbs.db
 .claude/skills/*
 !.claude/skills/robot-structural/
 !.claude/skills/eurocode-fi/
+!.claude/skills/autocad-mcp/
 
 # Filled NA parameter files hold the user's licensed values — keep only templates
 params/*.yaml

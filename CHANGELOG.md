@@ -15,6 +15,11 @@ Notable changes to this repo. Keep entries short; newest on top.
   lost on reopen, non-existent cases read back as zeros instead of an error,
   results must be recalculated after reopening a file.
 ### Added
+- **`autocad-mcp` skill** (`.claude/skills/autocad-mcp/`): check the connection
+  first and stop (no silent COM workaround) when it fails; find the 251 hidden
+  tools through `search_tools`; task → tool table for this repo's CAD rules;
+  read a dimension's value with `entity_get`; COM only for reads no MCP tool
+  covers (table cells). Built from the T1–T7 test notes and the 1.8.0 source.
 - **AutoCAD MCP** (`docs/20`, `examples/autocad/`): `.mcp.json` registers the
   community server U-C4N/Autocad-MCP (MIT, PyPI `autocad-mcp-pro==1.8.0` via
   `uvx`) as `autocad`, live AutoCAD engine, `CAD_LAUNCH=never`,
