@@ -4,10 +4,30 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Changed
+- **CAD drawing rules** (`CLAUDE.md`): start from the user's own CAD template
+  (layers, text and dimension styles), start every drawing at 0,0, write CAD
+  text in ALL CAPS, sheet layout with the drawing on the left and all text
+  (title block, notes) in a right-hand section, monochrome plot, full-bleed A4
+  with a window plot. AutoCAD can also be driven through plain COM when the
+  `autocad` MCP is not connected; `Documents.Add` returns an object without
+  `SaveAs`, use `ActiveDocument`.
 - **Robot MCP gotchas** (docs/14 + `robot-structural` skill): unsaved cases are
   lost on reopen, non-existent cases read back as zeros instead of an error,
   results must be recalculated after reopening a file.
 ### Added
+- **`autocad-mcp` skill** (`.claude/skills/autocad-mcp/`): check the connection
+  first and stop (no silent COM workaround) when it fails; find the 251 hidden
+  tools through `search_tools`; task → tool table for this repo's CAD rules;
+  read a dimension's value with `entity_get`; COM only for reads no MCP tool
+  covers (table cells). Built from the T1–T7 test notes and the 1.8.0 source.
+- **AutoCAD MCP** (`docs/20`, `examples/autocad/`): `.mcp.json` registers the
+  community server U-C4N/Autocad-MCP (MIT, PyPI `autocad-mcp-pro==1.8.0` via
+  `uvx`) as `autocad`, live AutoCAD engine, `CAD_LAUNCH=never`,
+  `LISP_POLICY=read`. Headless DXF mode smoke-tested on Windows 11 without
+  AutoCAD; live AutoCAD not yet tested. Finnish install + test protocol
+  (T1–T7: connection, layers, profile texts, beam, IPE300 section, member
+  table, save) in `examples/autocad/autocad-mcp-testaus.md`. Full AutoCAD
+  only; `auto` does not fall back to DXF on Windows.
 - **PTC Mathcad worksheet checker** (`docs/19`, `examples/mathcad/`):
   `check_mcdx.py` reads a Mathcad Prime `.mcdx` file without Mathcad
   (`worksheet.xml` + `result.xml`), re-evaluates every formula with its own

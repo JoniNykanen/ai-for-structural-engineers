@@ -16,6 +16,21 @@
       "type": "stdio",
       "command": "C:\\Program Files\\Autodesk\\Revit 2027 MCP Server Write-Tools Technical Preview\\Autodesk.RevitMcpServer.Stdio.exe",
       "args": []
+    },
+    "autocad": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "autocad-mcp-pro[com,pdf]==1.8.0",
+        "autocad-mcp"
+      ],
+      "env": {
+        "AUTOCAD_MCP_BACKEND": "com",
+        "CAD_LAUNCH": "never",
+        "LISP_POLICY": "read",
+        "DANGEROUS_COMMANDS_ENABLED": "false"
+      }
     }
   }
 }
