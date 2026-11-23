@@ -4,6 +4,10 @@ Notable changes to this repo. Keep entries short; newest on top.
 
 ## [Unreleased]
 ### Changed
+- **AutoCAD MCP test, 3rd run** (`examples/autocad/autocad-mcp-testaus.md`):
+  T1–T7 all pass again on 2026-11-23; dimension values now read through the
+  MCP (`entity_get`), COM only for table cells; fixed two tab-mangled
+  `C:\temp\…` paths.
 - **CAD drawing rules** (`CLAUDE.md`): start from the user's own CAD template
   (layers, text and dimension styles), start every drawing at 0,0, write CAD
   text in ALL CAPS, sheet layout with the drawing on the left and all text
